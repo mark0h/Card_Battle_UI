@@ -1,0 +1,18 @@
+<h1 align='center'></h1>
+
+<div class='row'>
+  <div class='col-md-2'></div>
+  <div class='col-md-8'>
+    <div class='panel panel-info'>
+      <div class='panel-heading'>
+        <h3 class='panel-title'>New Game</h3>
+      </div>
+      <div class='panel-body'>
+        Select your class:
+        <% @class_cards.each do |class_card| %>
+          <div class='btn btn-primary'><%= class_card %></div>
+        <% end %>
+      </div><!--  panel body -->
+    </div>
+  </div>  <!-- col-md-8 -->
+</div> <!-- row -->

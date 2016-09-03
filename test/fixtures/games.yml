@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  whose_turn: 1
+  p1_health: 1
+  p2_health: 1
+  round: 1
+
+two:
+  whose_turn: 1
+  p1_health: 1
+  p2_health: 1
+  round: 1

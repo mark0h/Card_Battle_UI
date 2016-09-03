@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  root 'main#menu'
+
+  get 'class_card/index', to: 'class_card#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  health: 1
+  base_stat: MyString
+  mp: 1
+  rp: 1
+  ms: 1
+  rs: 1
+  notes: MyText
+  ally: MyString
+
+two:
+  name: MyString
+  health: 1
+  base_stat: MyString
+  mp: 1
+  rp: 1
+  ms: 1
+  rs: 1
+  notes: MyText
+  ally: MyString
