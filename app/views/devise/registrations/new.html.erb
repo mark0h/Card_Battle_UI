@@ -1,0 +1,41 @@
+<%= bootstrap_devise_error_messages! %>
+<!-- <div class="panel panel-default devise-bs"> -->
+
+
+<div class='col-sm-2'>
+  <div class='col-sm-1'></div>
+  <div class='col-sm-11'>
+    <div id='main_menu_render'>
+      <%= render 'shared/main_menu' %>
+    </div>
+  </div>
+</div>
+
+<div class='col-md-8'>
+  <div class='panel panel-default'>
+    <div class="panel-heading">
+      <h4><%= t('.sign_up', :default => "Sign up") %></h4>
+    </div>
+    <p><i>&nbsp; Sign up is required to save game sessions.</i></p>
+    <div class="panel-body">
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { role: "form" }) do |f| %>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
+        <%= f.submit t('.sign_up', :default => "Sign up"), class: "btn btn-success" %>
+      <% end %>
+      <br>
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>

@@ -36,6 +36,12 @@ gem 'bootstrap-sass', '~> 3.3.5'
 #Windows 'fix'
 gem 'coffee-script-source', '1.8.0'
 
+#Devise
+gem 'devise'
+gem 'twitter-bootstrap-rails'
+gem 'devise-bootstrap-views'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

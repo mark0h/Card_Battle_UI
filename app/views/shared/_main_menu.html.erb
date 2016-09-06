@@ -4,7 +4,13 @@
     <h3 class='panel-title default_panel_header'>Main Menu</h3>
   </div>
   <div class='panel-body'>
-    <div class='btn btn-success' id="main_menu_start">Start a new game</div>
+    <!-- <ul style="list-style-type:none"> -->
+    <div class='btn btn-success' id="main_menu_start">Start a new game</div><br><br>
+    <% if current_user %>
+      <%= link_to "My Profile", edit_registration_path(current_user), class: 'btn btn-success'  %><br><br>
+      <%= link_to "My Games", my_games_path, class: 'btn btn-success' %><br><br>
+      <%= link_to("logout", destroy_user_session_path, class: 'btn btn-danger', method: :delete) %><br><br>
+    <% end %>
     <br>
     <br>
     <br>
