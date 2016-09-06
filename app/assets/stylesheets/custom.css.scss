@@ -1,3 +1,53 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+
+//        MAIN GAME RENDER PARTIAL DIVS
+//   These will hide or show based on what is clicked on the game page
+//
+
+#main_menu_render {
+  border-right: 1px;
+}
+
+#new_game_render {
+  display: none;
+  border-right: 1px;
+}
+
+#class_information {
+  display: none;
+}
+
+.default_panel_header {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: inherit;
+  text-align: center;
+  font-size: 1em;
+}
+
+.class_info_box {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.class_card_notes {
+  text-align: center;
+  font-style: italic;
+}
+
+.defense_list {
+  font-weight: bold;
+  font-size: 1.1em;
+  text-decoration: underline;
+  color: #13b643;
+}
+
+.defense_type {
+  margin-left: 20px;
+}

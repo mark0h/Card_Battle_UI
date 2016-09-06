@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   root 'main#menu'
 
   get 'class_card/index', to: 'class_card#index'
+  # get 'game/new', to: 'game#new'
+  resources :game, except: [:destroy, :edit, :update, :show]
+
+  get 'game/get_class_info', to: 'game#get_class_info'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
