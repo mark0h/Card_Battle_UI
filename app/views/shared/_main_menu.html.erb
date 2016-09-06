@@ -5,18 +5,15 @@
   </div>
   <div class='panel-body'>
     <!-- <ul style="list-style-type:none"> -->
-    <div class='btn btn-success' id="main_menu_start">Start a new game</div><br><br>
+
     <% if current_user %>
-      <%= link_to "My Profile", edit_registration_path(current_user), class: 'btn btn-success'  %><br><br>
-      <%= link_to "My Games", my_games_path, class: 'btn btn-success' %><br><br>
+      <div class='btn btn-success' id="main_menu_start">Start a new game</div><br><br>
+      <div class='btn btn-success' id="my_profile_button">My Profile</div><br><br>
+      <div class='btn btn-success' id="my_games_button">My Games</div><br><br>
       <%= link_to("logout", destroy_user_session_path, class: 'btn btn-danger', method: :delete) %><br><br>
+    <% else %>
+
     <% end %>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
     <br>
     <br>
     <br>

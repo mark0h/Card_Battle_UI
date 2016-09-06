@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   get 'game/get_class_info', to: 'game#get_class_info'
   get 'my_games', to: 'game#my_games'
 
+  #  MAIN MENU BUTTON LINKS
+  get '/game/new_game_render', to: 'game#new_game_render'
+  get '/game/intro_page_render', to: 'game#intro_page_render'
+  get '/game/my_profile', to: 'game#my_profile'
+  get '/game/my_games', to: 'game#my_games'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

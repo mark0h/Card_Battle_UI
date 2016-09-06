@@ -7,6 +7,10 @@
 //   These will hide or show based on what is clicked on the game page
 //
 
+html {
+  overflow-y: scroll;
+}
+
 #main_menu_render {
   border-right: 1px;
 }

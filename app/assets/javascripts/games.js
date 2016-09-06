@@ -6,8 +6,25 @@ $(document).ready(function() {
 });
 
 $(document).on('click', '#main_menu_start', function() {
-  $('#new_game_render').show();
-})
+  $('#main_screen_render').html("");
+  $('#main_screen_render').load("/game/new_game_render");
+});
+
+$(document).on('click', '#my_profile_button', function() {
+  $('#main_screen_render').html("");
+  $('#main_screen_render').load("/game/my_profile");
+});
+
+$(document).on('click', '#my_games_button', function() {
+  $('#main_screen_render').html("");
+  $('#main_screen_render').load("/game/my_games");
+});
+
+
+$(document).on('click', '#cancel_new_game', function() {
+  $('#main_screen_render').html("");
+  $('#main_screen_render').load("/game/intro_page_render");
+});
 
 
 //                          CLASS SELECTION
