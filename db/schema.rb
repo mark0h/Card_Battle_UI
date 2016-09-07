@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906212032) do
+ActiveRecord::Schema.define(version: 20160906235610) do
+
+  create_table "card_groups", force: :cascade do |t|
+    t.integer "game_id"
+    t.integer "card_id"
+    t.integer "cooldown_remaining"
+    t.boolean "current_hand_card"
+    t.boolean "deck_card"
+    t.boolean "cooldown_card"
+    t.boolean "inplay_card"
+  end
 
   create_table "class_cards", force: :cascade do |t|
     t.string   "name"
@@ -38,6 +48,27 @@ ActiveRecord::Schema.define(version: 20160906212032) do
     t.integer  "user_id"
     t.integer  "opponent_id"
   end
+
+  create_table "skill_cards", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "class_id"
+    t.string   "card_type"
+    t.integer  "cost"
+    t.string   "attack_type"
+    t.integer  "attack_targets"
+    t.integer  "damage"
+    t.string   "description"
+    t.string   "bonus_method"
+    t.integer  "buff_id"
+    t.integer  "debuff_id"
+    t.integer  "cooldown"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "image_path"
+  end
+
+  add_index "skill_cards", ["class_id"], name: "index_skill_cards_on_class_id"
+  add_index "skill_cards", ["name"], name: "index_skill_cards_on_name"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

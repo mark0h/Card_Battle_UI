@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  class_id: 1
+  card_type: MyString
+  cost: 1
+  attack_type: MyString
+  attack_targets: 1
+  damage: 1
+  description: MyString
+  bonus_method: MyString
+  buff_id: 1
+  debuff_id: 1
+  cooldown: 1
+
+two:
+  name: MyString
+  class_id: 1
+  card_type: MyString
+  cost: 1
+  attack_type: MyString
+  attack_targets: 1
+  damage: 1
+  description: MyString
+  bonus_method: MyString
+  buff_id: 1
+  debuff_id: 1
+  cooldown: 1

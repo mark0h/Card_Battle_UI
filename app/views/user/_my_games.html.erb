@@ -1,5 +1,12 @@
+<% get_my_games %>
+
 <% if @player_games.length < 1 %>
+  No games
 
 <% else %>
+  <% @player_games.each do |game| %>
+    <%= game.user_id %>
+    <%= game.p1_health %>
+  <% end %>
 
 <% end %>

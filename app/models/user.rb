@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
     "Anonymous"
   end
 
+  
+
 end
