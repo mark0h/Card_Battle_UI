@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
   #PLAY GAME WINDOW
   get '/game/setup_new_game', to: 'game#setup_new_game'
+  get '/game/get_current_deck', to: 'game#get_current_deck'
+  get '/game/add_card_to_hand', to: 'game#add_card_to_hand'
+  get '/game/remove_card_from_deck', to: 'game#remove_card_from_deck'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,33 +1,39 @@
 <% get_card_class_list %>
-<div class='panel panel-info'>
-  <div class='panel-heading'>
-    <h3 class='panel-title default_panel_header'>New Game</h3>
+<div class='row'>
+  <div class='col-sm-10'>
+
+    <div class='panel panel-info'>
+      <div class='panel-heading'>
+        <h3 class='panel-title default_panel_header'>New Game</h3>
+      </div>
+      <div class='panel-body'>
+        <b>Select your class:</b>
+        <div class="btn-group" id="class_selector" data-toggle="buttons">
+          <% @class_cards.each do |class_card| %>
+          <label class="btn btn-default" for="<%= class_card.name %>_select">
+            <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.name %>_select"><%= class_card.name %></input>
+          </label>
+            <!-- <button type="button" class="btn btn-default" id="<%= class_card.name %>_select"><%= class_card.name %></button> -->
+          <% end %>
+        </div>
+        <br><br>
+        <div class='col-sm-1'><div class='btn btn-success' id="start_new_game">Start</div></div>
+        <div class='col-sm-1'><div class='btn btn-danger' id="cancel_new_game">Cancel</div></div>
+      </div><!--  panel body -->
+    </div> <!-- panel -->
+    <div id="class_information">
+      <div class='panel panel-default'>
+        <div class='panel-heading'>
+          <h3 class='panel-title class_info_box'>
+            <div class='class_card_header'></div>
+          </h3>
+        </div>
+        <div class='panel-body'>
+          <div class='class_card_notes'></div>
+          <div class='class_card_body'></div>
+        </div>
+      </div>
+    </div> <!-- class_information div -->
+
   </div>
-  <div class='panel-body'>
-    <b>Select your class:</b>
-    <div class="btn-group" id="class_selector" data-toggle="buttons">
-      <% @class_cards.each do |class_card| %>
-      <label class="btn btn-default" for="<%= class_card.name %>_select">
-        <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.name %>_select"><%= class_card.name %></input>
-      </label>
-        <!-- <button type="button" class="btn btn-default" id="<%= class_card.name %>_select"><%= class_card.name %></button> -->
-      <% end %>
-    </div>
-    <br><br>
-    <div class='col-sm-1'><div class='btn btn-success' id="start_new_game">Start</div></div>
-    <div class='col-sm-1'><div class='btn btn-danger' id="cancel_new_game">Cancel</div></div>
-  </div><!--  panel body -->
-</div> <!-- panel -->
-<div id="class_information">
-  <div class='panel panel-default'>
-    <div class='panel-heading'>
-      <h3 class='panel-title class_info_box'>
-        <div class='class_card_header'></div>
-      </h3>
-    </div>
-    <div class='panel-body'>
-      <div class='class_card_notes'></div>
-      <div class='class_card_body'></div>
-    </div>
-  </div>
-</div> <!-- class_information div -->
+</div>

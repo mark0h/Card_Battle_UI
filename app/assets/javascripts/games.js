@@ -106,6 +106,7 @@ $(document).on('click', "#start_new_game", function(e) {
   console.log("starting game with " + class_selected);
   $('#main_screen_render').html("");
   $('#class_selected_cards').html("");
+  $('#gameplay_info').html("");
   $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id}));
 });
 
@@ -115,9 +116,23 @@ $(document).on('click', "#start_new_game", function(e) {
 // ============================================
 
 $(document).on('click', "#player_deck_stack", function() {
+  $('#player_deck_all').load("/game/get_current_deck");
   $('#player_deck_all').show();
 });
 
 $(document).on('click', "#close_player_deck", function() {
   $('#player_deck_all').hide();
-})
+});
+
+$(document).on('click', '#card_to_add_to_hand', function() {
+  $('#player_hand_cards').load("/game/add_card_to_hand?" + $.param({add_to_hand: $(this).attr('title')}), function() {
+    $('#player_deck_all').load("/game/get_current_deck");
+    $('#ready_play_button').show();
+  });
+
+});
+
+//error WINDOW
+function closeError() {
+    document.getElementById("myNav").style.height = "0%";
+}
