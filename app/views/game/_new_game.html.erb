@@ -11,7 +11,7 @@
         <div class="btn-group" id="class_selector" data-toggle="buttons">
           <% @class_cards.each do |class_card| %>
           <label class="btn btn-default" for="<%= class_card.name %>_select">
-            <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.name %>_select"><%= class_card.name %></input>
+            <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.name %>_select"><%= image_tag("#{class_card.image_path}", height: 180, width: 129, title: "#{class_card.id}_selected", id: 'new_game_class_select') %></input>
           </label>
             <!-- <button type="button" class="btn btn-default" id="<%= class_card.name %>_select"><%= class_card.name %></button> -->
           <% end %>

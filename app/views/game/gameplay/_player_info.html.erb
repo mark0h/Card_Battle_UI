@@ -1,0 +1,13 @@
+<% health_remainder = (@p1_current_health.to_f / @p1_health.to_f) * 100 %>
+<% if (0..25) === health_remainder %>
+  <%= image_tag("1_4_health.png", height: 55, width: 55) %>
+<% elsif (26..50) === health_remainder %>
+  <%= image_tag("1_2_health.png", height: 55, width: 55) %>
+<% elsif (51..75) === health_remainder %>
+  <%= image_tag("3_4_health.png", height: 55, width: 55) %>
+<% else %>
+  <%= image_tag("full_health.png", height: 55, width: 55) %>
+<% end %>
+<br>
+
+<h4 align='center'><%= @p1_current_health %>/<%= @p1_health %></h4>

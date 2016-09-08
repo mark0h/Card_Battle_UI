@@ -15,6 +15,10 @@
  *= require_self
  */
 
+ /*
+ *= require jquery-ui/dialog
+ */
+
 
  @import "bootstrap-sprockets";
  @import "bootstrap";

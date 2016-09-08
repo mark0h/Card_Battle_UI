@@ -1,4 +1,11 @@
 
-<% @player_one_current_hand.each do |card_value| %>
-  <%= image_tag("#{card_value.image_path}", height: 160, width: 114) %>
-<% end %>
+<div class='row'>
+  <div class='col-sm-6'>
+    <% @player_one_current_hand.each do |card_value| %>
+    <!-- height: 160, width: 114 -->
+      <%= image_tag("#{card_value.image_path}", height: 180, width: 129, title: "#{card_value.id}_selected", id: 'card_to_remove_from_hand') %>
+    <% end %>
+  </div>
+
+  <div class='col-sm-2'><div class='btn btn-success' id='ready_play_button' data-count="<%= @player_one_current_hand.length %>">PLAY!</div></div>
+</div>

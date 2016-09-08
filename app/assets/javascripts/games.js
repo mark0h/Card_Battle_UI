@@ -1,10 +1,8 @@
 //Global Variables
 var class_selected;
 var player_one_class_id;
+var deck_open = false;
 
-$(document).ready(function() {
-  console.log("document ready! yea");
-});
 
 $(document).on('click', '#main_menu_start', function() {
   $('#main_screen_render').html("");
@@ -107,32 +105,63 @@ $(document).on('click', "#start_new_game", function(e) {
   $('#main_screen_render').html("");
   $('#class_selected_cards').html("");
   $('#gameplay_info').html("");
-  $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id}));
+  $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id}), function() {
+    update_info_boxes();
+  });
+
 });
 
 
 // ============================================
 //         GAMEPLAY WINDOW FUNCTIONS
 // ============================================
-
+//WHEN CLICKING THE CLASS CARD DECK
 $(document).on('click', "#player_deck_stack", function() {
-  $('#player_deck_all').load("/game/get_current_deck");
-  $('#player_deck_all').show();
-});
+  if(deck_open) {
+    $('#player_deck_all').hide();
+    alert("deck already open!");
+  } else {
+    $('#player_deck_all').load("/game/get_current_deck");
+    $('#player_deck_all').show();
+  }
 
+});
+//WHCN CLLICKING THE CLOSE BUTTON IN THE DECK DISPLAY
 $(document).on('click', "#close_player_deck", function() {
   $('#player_deck_all').hide();
 });
-
+//WHEN CLICKING A CARD IN THE DECK TO ADD TO PLAYER HAND
 $(document).on('click', '#card_to_add_to_hand', function() {
   $('#player_hand_cards').load("/game/add_card_to_hand?" + $.param({add_to_hand: $(this).attr('title')}), function() {
     $('#player_deck_all').load("/game/get_current_deck");
     $('#ready_play_button').show();
   });
+});
+//WHEN CLICKING ON CARD IN HAND TO REMOVE, PRIOR TO PLAY
+$(document).on('click', '#card_to_remove_from_hand', function() {
+  $('#player_hand_cards').load("/game/remove_card_from_hand?" + $.param({remove_from_hand: $(this).attr('title')}), function() {
+    $('#player_deck_all').load("/game/get_current_deck");
+    $('#ready_play_button').show();
+  });
+});
+//WHEN CLICKING THE PLAY BUTTON
+$(document).on('click', '#ready_play_button', function() {
+  $("#need_three_cards_error").dialog({
+        autoOpen: false
+    });
 
+  var card_count = parseInt($(this).data('count'));
+  console.log("Playing with " + card_count);
+  if(card_count < 3) {
+    $( "#need_three_cards_error" ).html('Must select 3 cards!');
+    $( "#need_three_cards_error" ).dialog( "open" );
+  } else {
+    $( "#need_three_cards_error" ).html('Awesome, ready to play(soon!)');
+    $( "#need_three_cards_error" ).dialog( "open" );
+  }
 });
 
-//error WINDOW
-function closeError() {
-    document.getElementById("myNav").style.height = "0%";
+//INFO BOXES UPDATES
+function update_info_boxes() {
+  $('#player_info').load("/game/update_player_info?" + $.param({class_selected_id:player_one_class_id}));
 }

@@ -1,4 +1,8 @@
 
+
+<div id="need_three_cards_error" title="Error">
+</div>
+
 <div class='row'>
   <div class='col-sm-11'>
 
@@ -9,18 +13,32 @@
 
       <div class='panel-body'>
         <!-- OPPONENT CARD VIEW         -->
-        <div class='row' id='gameplay-opponent'><%= image_tag("#{@player_one_class.image_path}", height: 160, width: 114) %></div>
+        <div class='row' id='gameplay-opponent'>
+          <div class='col-sm-1'><b>OPPONENT</b></div>
+          <div class='col-sm-2'>
+            <%= image_tag("#{@player_one_class.image_path}", height: 196, width: 140) %></div>
+          </div>
+          <div class='col-sm-8'>
+            <span id='opponent_play_cards'></span>
+          </div>
+
         <!-- MIDDLE PLAY VIEW         -->
-        <div class='row' id='gameplay-middle'><br><br><br><br></div>
+        <div class='row' id='gameplay-middle'>
+            <br><br><br><br>
+        </div>
         <!-- PLAYER CARD VIEW         -->
         <div class='row' id='gameplay-player'>
-          <div class='col-sm-2'>
-            <%= image_tag("#{@player_one_class.image_path}", height: 160, width: 114, id: 'player_deck_stack') %>
+          <div class='col-sm-1'>
+            <b>PLAYER</b>
+            <div id='player_info'></div>
           </div>
-          <div class='col-sm-6'>
+          <div class='col-sm-2'>
+            <%= image_tag("#{@player_one_class.image_path}", height: 196, width: 140, id: 'player_deck_stack') %>
+          </div>
+          <div class='col-sm-8'>
             <span id='player_hand_cards'></span>
           </div>
-          <div class='col-sm-2' id='ready_play_button'><div class='btn btn-success'>PLAY!</div></div>
+
         </div>
 
         <hr>

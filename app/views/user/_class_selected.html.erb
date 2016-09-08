@@ -12,7 +12,7 @@
           <% @class_deck.each do |card_value| %>
             <% card_count += 1 %>
             <%= image_tag("#{card_value.image_path}", height: 196, width: 140) %>
-            <% if card_count > 4 %>
+            <% if card_count > 8 %>
               <br><br>
               <% card_count = 0 %>
             <% end %>
