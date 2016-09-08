@@ -1,0 +1,24 @@
+
+<div class='row'>
+  <!-- <div class='col-sm-2'></div> -->
+  <!-- <div class='col-sm-8'> -->
+    <div class='panel panel-default'>
+      <div class='panel-heading'>
+        <h3 class='panel-title default_panel_header'>Cards</h3>
+      </div>
+      <div class='panel-body'>
+        <div align='center'>
+          <% card_count = 1 %>
+          <% @class_deck.each do |card_value| %>
+            <% card_count += 1 %>
+            <%= image_tag("#{card_value.image_path}", height: 196, width: 140) %>
+            <% if card_count > 4 %>
+              <br><br>
+              <% card_count = 0 %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</div>

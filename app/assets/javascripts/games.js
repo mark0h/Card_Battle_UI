@@ -35,13 +35,20 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   console.log("button selection changed to " + $(this).val());
   class_selected = $(this).val();
   var filters = {'class_selected': class_selected}
+  var class_id = null;
 
   var info_html_header = "";
   var info_html_notes = "";
   var info_html = ""
   $.getJSON('game/get_class_info', filters, function(data) {
     $.each(data, function(node_id, node_data) {
-      if(node_id == 'created_at' || node_id == 'updated_at' || node_id == 'id') {
+      if(node_id == 'created_at' || node_id == 'updated_at') {
+        return true;
+      }
+      if(node_id == 'id') {
+        console.log("id node " + node_data);
+        class_id = node_data;
+        $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:class_id}));
         return true;
       }
 
@@ -93,6 +100,8 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   });
 
   $('#class_information').show();
+
+  $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:"Testing"}));
 });
 
 $(document).on('click', "#start_new_game", function(e) {

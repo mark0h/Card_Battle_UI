@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get '/game/my_profile', to: 'game#my_profile'
   get '/game/my_games', to: 'game#my_games'
 
+  #NEW GAME CLASS selection
+  get '/game/selected_class_cards', to: 'game#selected_class_cards'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
