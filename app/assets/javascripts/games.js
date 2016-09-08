@@ -1,5 +1,6 @@
 //Global Variables
 var class_selected;
+var player_one_class_id;
 
 $(document).ready(function() {
   console.log("document ready! yea");
@@ -35,7 +36,6 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   console.log("button selection changed to " + $(this).val());
   class_selected = $(this).val();
   var filters = {'class_selected': class_selected}
-  var class_id = null;
 
   var info_html_header = "";
   var info_html_notes = "";
@@ -47,8 +47,8 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
       }
       if(node_id == 'id') {
         console.log("id node " + node_data);
-        class_id = node_data;
-        $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:class_id}));
+        player_one_class_id = node_data;
+        $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:player_one_class_id}));
         return true;
       }
 
@@ -100,10 +100,24 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   });
 
   $('#class_information').show();
-
-  $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:"Testing"}));
 });
 
 $(document).on('click', "#start_new_game", function(e) {
   console.log("starting game with " + class_selected);
+  $('#main_screen_render').html("");
+  $('#class_selected_cards').html("");
+  $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id}));
 });
+
+
+// ============================================
+//         GAMEPLAY WINDOW FUNCTIONS
+// ============================================
+
+$(document).on('click', "#player_deck_stack", function() {
+  $('#player_deck_all').show();
+});
+
+$(document).on('click', "#close_player_deck", function() {
+  $('#player_deck_all').hide();
+})

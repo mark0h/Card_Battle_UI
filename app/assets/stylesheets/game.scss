@@ -1,3 +1,17 @@
 // Place all the styles related to the Game controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+//GAMEPLAY WINDOW
+#gameplay-opponent {
+  padding-left: 10px;
+}
+
+#gameplay-player {
+  padding-left: 10px;
+}
+
+#player_deck_all {
+  display: none;
+}

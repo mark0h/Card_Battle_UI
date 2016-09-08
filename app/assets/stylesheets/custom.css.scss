@@ -1,6 +1,5 @@
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
 
 
 //        MAIN GAME RENDER PARTIAL DIVS
@@ -22,6 +21,10 @@ html {
 
 #class_information {
   display: none;
+}
+
+.gameplay-row {
+  height: 200px;
 }
 
 
