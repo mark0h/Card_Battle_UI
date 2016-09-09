@@ -188,7 +188,7 @@ $(document).on('click', "#start_new_game", function(e) {
   $('#main_screen_render').html("");
   $('#class_selected_cards').html("");
   $('#gameplay_info').html("");
-  $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id}), function() {
+  $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id}), function() {
     update_info_boxes();
   });
 

@@ -4,6 +4,7 @@ module PlayGame
 
   def setup_new_game
     @player_one_class = ClassCard.find(params[:class_selected_id])
+    @opponent_class = ClassCard.find(params[:opponent_selected_id])
     @player_one_health = @player_one_class.health
     @player_one_energy = 1
 
