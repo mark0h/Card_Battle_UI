@@ -44,8 +44,21 @@ html {
   text-align: center;
 }
 
+.class_card_header {
+  font-weight: bold;
+}
+
+.opponent_card_header {
+  font-weight: bold;
+}
+
 .class_card_notes {
-  text-align: center;
+  // text-align: center;
+  font-style: italic;
+}
+
+.opponent_card_notes {
+  // text-align: center;
   font-style: italic;
 }
 

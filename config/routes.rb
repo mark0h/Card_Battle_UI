@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :game, except: [:destroy, :edit, :update, :show]
 
   get 'game/get_class_info', to: 'game#get_class_info'
+  get 'game/get_opponent_info', to: 'game#get_opponent_info'
   get 'my_games', to: 'game#my_games'
 
   #  MAIN MENU BUTTON LINKS
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
 
   #NEW GAME CLASS selection
   get '/game/selected_class_cards', to: 'game#selected_class_cards'
+  get '/game/opponent_class_cards', to: 'game#opponent_class_cards'
 
   #PLAY GAME WINDOW
   get '/game/setup_new_game', to: 'game#setup_new_game'
