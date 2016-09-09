@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "user/registrations"}
-  root 'main#menu'
+  root 'game#index'
 
   get 'class_card/index', to: 'class_card#index'
   resources :game, except: [:destroy, :edit, :update, :show]
