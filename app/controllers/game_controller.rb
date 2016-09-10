@@ -2,6 +2,8 @@ class GameController < ApplicationController
   include CardInfo
   include MainMenu
   include PlayGame
+  include AiSetup
+  include AiAttack
 
   def index
   end

@@ -1,6 +1,6 @@
-<!-- FROM METHOD update_player_info in play_game.rb -->
+<!-- FROM METHOD update_opponent_info in play_game.rb -->
 
-<% health_remainder = (@p1_current_health.to_f / @p1_health.to_f) * 100 %>
+<% health_remainder = (@opponent_current_health.to_f / @opponent_health.to_f) * 100 %>
 <% if (0..25) === health_remainder %>
   <%= image_tag("1_4_health.png", height: 55, width: 55) %>
 <% elsif (26..50) === health_remainder %>
@@ -11,13 +11,13 @@
   <%= image_tag("full_health.png", height: 55, width: 55) %>
 <% end %>
 <br>
-<h4 align='center'><%= @p1_current_health %>/<%= @p1_health %></h4>
+<h4 align='center'><%= @opponent_current_health %>/<%= @opponent_health %></h4>
 
 <br><br>
-<% if @p1_current_energy == 5 %>
+<% if @opponent_current_energy == 5 %>
   <%= image_tag("full_energy.png", height: 55, width: 55) %>
 <% else %>
-  <%= image_tag("#{@p1_current_energy}_5_energy.png", height: 55, width: 55) %>
+  <%= image_tag("#{@opponent_current_energy}_5_energy.png", height: 55, width: 55) %>
 <% end %>
 
-<h4 align='center'><%=@p1_current_energy %>/5</h4>
+<h4 align='center'><%=@opponent_current_energy %>/5</h4>

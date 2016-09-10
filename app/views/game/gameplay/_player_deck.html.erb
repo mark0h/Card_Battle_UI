@@ -1,7 +1,10 @@
-<h4>CURRENT DECK</h4><br>
+<!-- GETS VARIABLE FROM play_game.rb -->
+
 <% card_count = 1 %>
 <% @player_one_current_deck.each do |card_value| %>
   <% card_count += 1 %>
-  <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.id}_selected", id: 'card_to_add_to_hand') %>
+  <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.card_id}_selected", id: 'card_to_add_to_hand') %>
 <% end %>
-<span class='btn btn-danger' id='close_player_deck'>Close</span>
+<br>
+<div class='deck_instructions'>Click on a card to add to your play hand</div>
+<!-- <span class='btn btn-danger' id='close_player_deck'>Close</span> -->

@@ -1,6 +1,8 @@
+<!-- GETS VARIABLE FROM play_game.rb -->
 
+<div id="player_deck_show" title="DECK"></div>
 
-<div id="need_three_cards_error" title="Error">
+<div id="error_popup" title="Error">
 </div>
 
 <div class='row'>
@@ -14,7 +16,10 @@
       <div class='panel-body'>
         <!-- OPPONENT CARD VIEW         -->
         <div class='row' id='gameplay-opponent'>
-          <div class='col-sm-1'><b>OPPONENT</b></div>
+          <div class='col-sm-1'>
+            <b>OPPONENT</b>
+            <div id='opponent_info'></div>
+          </div>
           <div class='col-sm-2'>
             <%= image_tag("#{@opponent_class.image_path}", height: 196, width: 140) %></div>
           </div>
@@ -24,7 +29,7 @@
 
         <!-- MIDDLE PLAY VIEW         -->
         <div class='row' id='gameplay-middle'>
-            <br><br><br><br>
+
         </div>
         <!-- PLAYER CARD VIEW         -->
         <div class='row' id='gameplay-player'>
@@ -41,10 +46,10 @@
 
         </div>
 
-        <hr>
+        <!-- <hr> -->
         <!-- PLAY DECK VIEW -->
-        <div align='center' id='player_deck_all'></div>
-      </div>
+        <!-- <div align='center' id='player_deck_all'></div>
+      </div> -->
 
     </div>
 

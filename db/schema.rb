@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908182610) do
+ActiveRecord::Schema.define(version: 20160909143729) do
 
   create_table "card_groups", force: :cascade do |t|
     t.integer "game_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160908182610) do
     t.boolean "inplay_card"
     t.string  "image_path"
     t.integer "class_id"
+    t.integer "user_id"
   end
 
   create_table "class_cards", force: :cascade do |t|
