@@ -8,7 +8,7 @@
 # 6. UPDATE STATUS WINDOW
 
 
-module PlayGame
+module PreRoundSetup
   extend ActiveSupport::Concern
 
   #    1. NEW GAME SETUP
@@ -16,12 +16,12 @@ module PlayGame
     @player_one_class = ClassCard.find(params[:class_selected_id])
     @opponent_class = ClassCard.find(params[:opponent_selected_id])
     @player_one_health = @player_one_class.health
-    @player_one_energy = 1
+    @opponent_health = @opponent_class.health
 
     @player_one_current_deck = SkillCard.where(class_id: params[:class_selected_id])
 
 
-    new_game = Game.where(whose_turn: 1, p1_health: @player_one_health, p2_health: @player_one_health, round: 1, user_id: current_user.id, opponent_id: 0).first_or_create
+    new_game = Game.where(whose_turn: 1, p1_health: @player_one_health, p2_health: @opponent_health, round: 1, user_id: current_user.id, opponent_id: 0, p1_energy: 1, p2_energy: 1).first_or_create
 
     #Add all cards as deck cards to CardGroup
     @player_one_current_deck.each do |card|
@@ -32,9 +32,7 @@ module PlayGame
 
     session[:game_id] = new_game.id
 
-    render "game/gameplay/_play_game",
-         layout: false
-
+    render partial: 'game/gameplay/round/pre_round_setup', layout: false
   end
 
   #     2. SAVED GAME SETUP
@@ -86,17 +84,24 @@ module PlayGame
     render partial: "game/gameplay/player_current_hand",layout: false
   end
 
-  #     6. UPDATE STATUS WINDOW
+  #     6. UPDATE STATUS WINDOWS
+  def update_all_info_windowss
+    update_player_info
+    update_opponent_info
+    update_round_info
+  end
+
+
   def update_player_info
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
 
     @p1_current_health = current_game.p1_health
     @p1_health = ClassCard.find(params[:class_selected_id]).health
-    @p1_current_energy = 4
+    @p1_current_energy = current_game.p1_energy
 
     logger.info "current_health: #{@p1_current_health}  total_health: #{@p1_health}"
-    render partial: "game/gameplay/player_info",layout: false
+    render partial: "game/gameplay/info_windows/player_info",layout: false
   end
 
   def update_opponent_info
@@ -105,10 +110,25 @@ module PlayGame
 
     @opponent_current_health = current_game.p2_health
     @opponent_health = ClassCard.find(params[:class_selected_id]).health
-    @opponent_current_energy = 4
+    @opponent_current_energy = current_game.p2_energy
 
     logger.info "opponent current_health: #{@opponent_current_health}  total_health: #{@opponent_health}"
-    render partial: "game/gameplay/opponent_info",layout: false
+    render partial: "game/gameplay/info_windows/opponent_info",layout: false
+  end
+
+  def update_round_info
+    current_game_id = session[:game_id]
+    current_game = Game.find(current_game_id)
+    @round_count = current_game.round
+    @player_turn = "Your turn"
+    @player_turn = "Opponent's turn" #if current_game.whose_turn == 2
+    render partial: "game/gameplay/info_windows/round_info",layout: false
+  end
+
+  def start_round
+    @player_current_hand = SkillCard.find(params[:card_ids])
+
+    render partial: "game/gameplay/round/_attack_round", layout: false
   end
 
 

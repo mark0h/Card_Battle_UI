@@ -28,19 +28,25 @@ var card_count;
 
 // 1. MAIN MENU
 $(document).on('click', '#main_menu_start', function() {
-  $('#dialog').dialog('destroy');
+  if ($("#player_deck_show[_dialogInitialized]").length == 1) {
+    $('#player_deck_show').dialog('destroy');
+  }
   $('#main_screen_render').html("");
   $('#main_screen_render').load("/game/new_game_render");
 });
 
 $(document).on('click', '#my_profile_button', function() {
-  $('#dialog').dialog('destroy');
+  if ($("#player_deck_show[_dialogInitialized]").length == 1) {
+    $('#player_deck_show').dialog('destroy');
+  }
   $('#main_screen_render').html("");
   $('#main_screen_render').load("/game/my_profile");
 });
 
 $(document).on('click', '#my_games_button', function() {
-  $('#dialog').dialog('destroy');
+  if ($("#player_deck_show[_dialogInitialized]").length == 1) {
+    $('#player_deck_show').dialog('destroy');
+  }
   $('#main_screen_render').html("");
   $('#main_screen_render').load("/game/my_games");
 });
@@ -295,6 +301,7 @@ $(document).on('click', '#ready_play_button', function() {
 function update_info_boxes() {
   $('#player_info').load("/game/update_player_info?" + $.param({class_selected_id:player_one_class_id}));
   $('#opponent_info').load("/game/update_opponent_info?" + $.param({class_selected_id:opponent_class_id}));
+  $('#round_info').load("/game/update_round_info");
 }
 
 function view_error_popup() {
@@ -311,7 +318,7 @@ function view_error_popup() {
 }
 
 function view_player_deck() {
-    $('#player_deck_show').load('/game/get_current_deck').dialog({
+    $('#player_deck_show').load('/game/get_current_deck').attr("_dialogInitialized", "yes").dialog({
         title: 'DECK' ,
         // modal: 'true',
         maxWidth:1200,

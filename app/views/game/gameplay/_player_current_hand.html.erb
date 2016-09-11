@@ -3,7 +3,7 @@
   <div class='col-sm-6'>
     <% @player_one_current_hand.each do |card_value| %>
     <!-- height: 160, width: 114 -->
-      <%= image_tag("#{card_value.image_path}", height: 180, width: 129, title: "#{card_value.card_id}_selected", id: 'card_to_remove_from_hand') %>
+      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.card_id}_selected", id: 'card_to_remove_from_hand') %>
     <% end %>
   </div>
 

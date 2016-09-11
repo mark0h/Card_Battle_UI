@@ -1,7 +1,7 @@
 class GameController < ApplicationController
   include CardInfo
   include MainMenu
-  include PlayGame
+  include PreRoundSetup
   include AiSetup
   include AiAttack
 

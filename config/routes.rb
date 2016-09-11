@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   # PLAY GAME STATUS WINDOW
   get '/game/update_player_info', to: 'game#update_player_info'
   get '/game/update_opponent_info', to: 'game#update_opponent_info'
+  get '/game/update_round_info', to: 'game#update_round_info'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
