@@ -13,11 +13,15 @@ module PreRoundSetup
 
   #    1. NEW GAME SETUP
   def setup_new_game
+    logger.info "Setting up new game"
     @player_one_class = ClassCard.find(params[:class_selected_id])
     @opponent_class = ClassCard.find(params[:opponent_selected_id])
     @player_one_health = @player_one_class.health
     @opponent_health = @opponent_class.health
     @round_number = 1
+
+    logger.info "@player_one_class: #{@player_one_class.inspect}"
+    logger.info "@opponent_class: #{@opponent_class.inspect}"
 
     @player_one_priority = @player_one_class.turn_priority
     @opponent_priority = @opponent_class.turn_priority
