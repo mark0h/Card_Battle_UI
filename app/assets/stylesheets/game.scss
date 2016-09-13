@@ -54,3 +54,18 @@
   font-weight: bold;
   font-size: 1.0em;
 }
+
+.btn-group .btn{
+  border: 0px;
+  border-radius: 0px;
+}
+
+.btn-group-justified .btn {
+  border: 0px;
+  border-radius: 0px;
+}
+
+.btn-group-justified .btn:last-of-type {
+  border: 0px;
+  border-radius: 0px;
+}

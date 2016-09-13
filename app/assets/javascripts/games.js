@@ -18,6 +18,7 @@
 var player_one_class_id;
 var opponent_class_id;
 var card_count;
+var new_game_start;
 
 // 1. MAIN MENU
 $(document).on('click', '#main_menu_start', function() {
@@ -202,6 +203,7 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
 
 // C. START BUTTON
 $(document).on('click', "#start_new_game", function(e) {
+  new_game_start = true;
   console.log("Oppenent selected: " + opponent_class_id);
   console.log("starting game with " + player_one_class_id);
 
@@ -240,15 +242,13 @@ $(document).on('click', '#cancel_new_game', function() {
 // A. DECK CONTROLS
 //WHEN CLICKING THE CLASS CARD DECK
 $(document).on('click', "#player_deck_stack", function() {
-  var card_count = parseInt($(this).data('count'));
-  console.log("Playing with " + card_count);
   view_player_deck();
 });
 
 //      B. ADDING/REMOVING CARD TO HAND
 //WHEN CLICKING A CARD IN THE DECK TO ADD TO PLAYER HAND
 $(document).on('click', '#card_to_add_to_hand', function() {
-  $('#player_hand_cards').load("/game/add_card_to_hand?" + $.param({add_to_hand: $(this).attr('title')}), function() {
+  $('#player_hand_cards').load("/game/add_card_to_hand?" + $.param({add_to_hand: $(this).data('cardvalue')}), function() {
     $('#player_deck_all').load("/game/get_current_deck");
     card_count = parseInt($('#ready_play_button').data('count'));
     if(card_count == 3) {
@@ -259,7 +259,7 @@ $(document).on('click', '#card_to_add_to_hand', function() {
 });
 //WHEN CLICKING ON CARD IN HAND TO REMOVE, PRIOR TO PLAY
 $(document).on('click', '#card_to_remove_from_hand', function() {
-  $('#player_hand_cards').load("/game/remove_card_from_hand?" + $.param({remove_from_hand: $(this).attr('title')}), function() {
+  $('#player_hand_cards').load("/game/remove_card_from_hand?" + $.param({remove_from_hand: $(this).data('cardvalue')}), function() {
     $('#player_deck_all').load("/game/get_current_deck");
     card_count = parseInt($('#ready_play_button').data('count'));
     if(card_count < 1) {
@@ -271,11 +271,12 @@ $(document).on('click', '#card_to_remove_from_hand', function() {
 
 //        C. PLAY BUTTON
 $(document).on('click', '#ready_play_button', function() {
-
+  new_game_start = false;
   card_count = parseInt($(this).data('count'));
   card_ids = parseInt($(this).data('current_hand'));
   console.log("Playing with " + card_count);
   $('#player_hand_cards').load("/game/start_round?" + $.param({class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, card_ids:card_ids}));
+  update_info_boxes();
 });
 
 
@@ -287,7 +288,8 @@ $(document).on('click', '#ready_play_button', function() {
 function update_info_boxes() {
   $('#player_info').load("/game/update_player_info?" + $.param({class_selected_id:player_one_class_id}));
   $('#opponent_info').load("/game/update_opponent_info?" + $.param({class_selected_id:opponent_class_id}));
-  $('#round_info').load("/game/update_round_info");
+  console.log("updating round info with new_game_start value: " + new_game_start);
+  $('#round_info').load("/game/update_round_info?" + $.param({new_game_start:new_game_start}));
 }
 
 function view_error_popup() {

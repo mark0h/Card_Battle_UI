@@ -1,13 +1,13 @@
 
 <div class='row'>
-  <div class='col-sm-6'>
+  <div class='col-sm-8'>
     <% card_ids = [] %>
     <% @player_one_current_hand.each do |card_value| %>
     <!-- height: 160, width: 114 -->
-      <% card_ids.push(card_value.id) %>
-      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.card_id}_selected", id: 'card_to_remove_from_hand') %>
+      <% card_ids.push(card_value.card_id) %>
+      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.image_path.gsub(/.png/,'')}", data: { cardvalue: "#{card_value.card_id}_selected"}, id: 'card_to_remove_from_hand') %>
     <% end %>
   </div>
 
-  <div class='col-sm-2'><div class='btn btn-success' id='ready_play_button' data-current_hand="<%= @player_one_current_hand %>" data-count="<%= @player_one_current_hand.length %>">PLAY!</div></div>
+  <div class='col-sm-2'><div class='btn btn-success' id='ready_play_button' data-current_hand="<%= card_ids %>" data-count="<%= @player_one_current_hand.length %>">PLAY!</div></div>
 </div>

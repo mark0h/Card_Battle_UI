@@ -3,7 +3,7 @@
 <% card_count = 1 %>
 <% @player_one_current_deck.each do |card_value| %>
   <% card_count += 1 %>
-  <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.card_id}_selected", id: 'card_to_add_to_hand') %>
+  <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.image_path.gsub(/.png/,'')}", data: { cardvalue: "#{card_value.card_id}_selected"}, id: 'card_to_add_to_hand') %>
 <% end %>
 <br>
 <div class='deck_instructions'>Click on a card to add to your play hand.</div><br>

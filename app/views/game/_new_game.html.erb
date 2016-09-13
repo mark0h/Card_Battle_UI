@@ -12,7 +12,7 @@
       </div>
       <div class='panel-body'>
 
-        <div align='center' class='class_card_notes'>Face off against a computer opponent. Multiplayer coming later!</div><br>
+        <div align='center'><i>Face off against a computer opponent. Multiplayer coming later!</i></div><br>
 
         <!-- CLASS SELECTION -->
         <div class='row'>
@@ -23,7 +23,7 @@
             <div class="btn-group" id="class_selector" data-toggle="buttons">
               <% @class_cards.each do |class_card| %>
               <label class="btn btn-default" for="<%= class_card.name %>_select">
-                <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.id %>_select"><%= image_tag("#{class_card.image_path}", height: 180, width: 129, title: "#{class_card.id}_selected", id: 'new_game_class_select') %></input>
+                <input type="radio" name="class_options" id="<%= class_card.name %>_select" value="<%= class_card.id %>_select"><%= image_tag("#{class_card.image_path}", height: 180, width: 129, title: "#{class_card.name}", id: 'new_game_class_select') %></input>
               </label>
                 <!-- <button type="button" class="btn btn-default" id="<%= class_card.name %>_select"><%= class_card.name %></button> -->
               <% end %>
@@ -42,7 +42,7 @@
             <div class="btn-group" id="opponent_selector" data-toggle="buttons">
               <% @class_cards.each do |opponent_card| %>
               <label class="btn btn-default" for="<%= opponent_card.name %>_opponent">
-                <input type="radio" name="opponent_options" id="opponent_options" value="<%= opponent_card.id %>_opponent"><%= image_tag("#{opponent_card.image_path}", height: 180, width: 129, title: "#{opponent_card.id}_selected", id: 'new_game_opponent_select') %></input>
+                <input type="radio" name="opponent_options" id="opponent_options" value="<%= opponent_card.id %>_opponent"><%= image_tag("#{opponent_card.image_path}", height: 180, width: 129, title: "#{opponent_card.name}", id: 'new_game_opponent_select') %></input>
               </label>
               <% end %>
             </div>

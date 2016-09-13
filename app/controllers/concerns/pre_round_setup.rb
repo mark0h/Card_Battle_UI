@@ -148,7 +148,24 @@ module PreRoundSetup
   def update_round_info
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
-    @round_phase = "Setup"
+
+     @round_number = current_game.round
+
+    if params[:new_game_start]
+      @round_phase = "Setup"
+    else
+      case current_game.whose_turn
+      when 11
+        @round_phase = "Player attacking"
+      when 12
+        @round_phase = "Player defending"
+      when 21
+        @round_phase = "Opponent attacking"
+      when 22
+        @round_phase = "Opponent Defending"
+      end
+    end
+
     # @player_turn = "Your turn"
     # @player_turn = "Opponent's turn" #if current_game.whose_turn == 2
     render partial: "game/gameplay/info_windows/round_info",layout: false
@@ -156,13 +173,15 @@ module PreRoundSetup
 
   def start_round
     current_game_id = session[:game_id]
-    @player_current_hand = SkillCard.find(params[:card_ids])
-    @player_one_class = ClassCard.find(params[:class_selected_id])
-    @opponent_class = ClassCard.find(params[:opponent_selected_id]).gsub(/_selected/,'').to_i
-    @whose_turn = Game.find(current_game_id).first.whose_turn
+    @player_one_play_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
+
+    
+    # @player_one_class = ClassCard.find(params[:class_selected_id])
+    # @opponent_class = ClassCard.find(params[:opponent_selected_id])
+    # @whose_turn = Game.find(current_game_id).whose_turn
 
 
-    render partial: "game/gameplay/round/_attack_round", layout: false
+    render partial: "game/gameplay/player_hand/attack_round_hand", layout: false
   end
 
 
