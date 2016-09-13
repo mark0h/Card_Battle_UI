@@ -1,0 +1,15 @@
+
+<div class='row'>
+  <div class='col-sm-6'>
+    <% @player_one_play_hand.each do |card_value| %>
+    <!-- height: 160, width: 114 -->
+      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.card_id}_selected", id: 'card_to_attack') %>
+    <% end %>
+  </div>
+
+  <div class='col-sm-2'>
+    <div class='btn btn-success' id='attack_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">ATTACK</div>
+    <div class='btn btn-warning' id='skip_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">SKIP</div>
+    <div class='btn btn-danger' id='forfeit_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">FORGEIT</div>
+  </div>
+</div>

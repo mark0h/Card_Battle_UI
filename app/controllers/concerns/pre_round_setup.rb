@@ -17,15 +17,38 @@ module PreRoundSetup
     @opponent_class = ClassCard.find(params[:opponent_selected_id])
     @player_one_health = @player_one_class.health
     @opponent_health = @opponent_class.health
+    @round_number = 1
+
+    @player_one_priority = @player_one_class.turn_priority
+    @opponent_priority = @opponent_class.turn_priority
+
+    if @player_one_priority < @opponent_priority
+      @whose_turn = 11
+    elsif @player_one_priority > @opponent_priority
+      @whose_turn = 21
+    else
+      r = Random.rand(1..2)
+      @whose_turn = "#{r}1".to_i
+    end
+
+
 
     @player_one_current_deck = SkillCard.where(class_id: params[:class_selected_id])
+    @opponent_current_deck = SkillCard.where(class_id: params[:opponent_selected_id])
 
 
-    new_game = Game.where(whose_turn: 1, p1_health: @player_one_health, p2_health: @opponent_health, round: 1, user_id: current_user.id, opponent_id: 0, p1_energy: 1, p2_energy: 1).first_or_create
+    new_game = Game.where(whose_turn: @whose_turn, p1_health: @player_one_health, p2_health: @opponent_health, round: @round_number, user_id: current_user.id, opponent_id: 0, p1_energy: 1, p2_energy: 1).first_or_create
 
     #Add all cards as deck cards to CardGroup
     @player_one_current_deck.each do |card|
       d_card = CardGroup.where(game_id: new_game.id, card_id: card.id, user_id: current_user.id).first_or_create
+      d_card.update(cooldown_remaining: 0, current_hand_card: false, deck_card: true, cooldown_card: false, inplay_card: false, image_path: card.image_path)
+      d_card.save
+    end
+
+    #Add all cards as deck cards to CardGroup
+    @opponent_current_deck.each do |card|
+      d_card = CardGroup.where(game_id: new_game.id, card_id: card.id, user_id: 0).first_or_create
       d_card.update(cooldown_remaining: 0, current_hand_card: false, deck_card: true, cooldown_card: false, inplay_card: false, image_path: card.image_path)
       d_card.save
     end
@@ -68,7 +91,7 @@ module PreRoundSetup
     end
 
     @player_one_current_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
-    render partial: "game/gameplay/player_current_hand",layout: false
+    render partial: "game/gameplay/player_hand/pre_round_hand",layout: false
 
   end
 
@@ -81,11 +104,13 @@ module PreRoundSetup
     card_remove.update(current_hand_card: false, deck_card: true, cooldown_card: false, inplay_card: false)
 
     @player_one_current_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
-    render partial: "game/gameplay/player_current_hand",layout: false
+    render partial: "game/gameplay/player_hand/pre_round_hand",layout: false
   end
 
+  # ============================================
   #     6. UPDATE STATUS WINDOWS
-  def update_all_info_windowss
+  # ============================================
+  def update_all_info_windows
     update_player_info
     update_opponent_info
     update_round_info
@@ -119,14 +144,19 @@ module PreRoundSetup
   def update_round_info
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
-    @round_count = current_game.round
-    @player_turn = "Your turn"
-    @player_turn = "Opponent's turn" #if current_game.whose_turn == 2
+    @round_phase = "Setup"
+    # @player_turn = "Your turn"
+    # @player_turn = "Opponent's turn" #if current_game.whose_turn == 2
     render partial: "game/gameplay/info_windows/round_info",layout: false
   end
 
   def start_round
+    current_game_id = session[:game_id]
     @player_current_hand = SkillCard.find(params[:card_ids])
+    @player_one_class = ClassCard.find(params[:class_selected_id])
+    @opponent_class = ClassCard.find(params[:opponent_selected_id])
+    @whose_turn = Game.find(current_game_id).first.whose_turn
+
 
     render partial: "game/gameplay/round/_attack_round", layout: false
   end

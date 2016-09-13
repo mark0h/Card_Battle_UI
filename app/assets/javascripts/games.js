@@ -14,16 +14,9 @@
 // 4. POPUP BOXES
 //    A. PLAY BUTTON CARD COUNT CHECK
 
-
-
-
-
 //Global Variables
-var class_selected;
-var opponent_selected;
 var player_one_class_id;
 var opponent_class_id;
-var deck_open = false;
 var card_count;
 
 // 1. MAIN MENU
@@ -60,9 +53,9 @@ $(document).on('click', '#my_games_button', function() {
 
 $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   console.log("button selection changed to " + $(this).val());
-  class_selected = $(this).val();
+  player_one_class_id = $(this).val();
 
-  var filters = {'class_selected': class_selected}
+  var filters = {'class_selected': player_one_class_id}
 
   // ================================
   // GETTING CLASS SELECTED info
@@ -72,13 +65,7 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   var info_html = ""
   $.getJSON('game/get_class_info', filters, function(data) {
     $.each(data, function(node_id, node_data) {
-      if(node_id == 'created_at' || node_id == 'updated_at') {
-        return true;
-      }
-      if(node_id == 'id') {
-        console.log("id node " + node_data);
-        player_one_class_id = node_data;
-        $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:player_one_class_id}));
+      if(node_id == 'created_at' || node_id == 'updated_at' || node_id == 'id') {
         return true;
       }
 
@@ -112,6 +99,11 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
           break;
         case 'ally':
           info_html += "<b>ALLY: </b>"
+          info_html += node_data
+          info_html += "<br>"
+          break;
+        case 'turn_priority':
+          info_html += "<b>Turn Order: </b>"
           info_html += node_data
           info_html += "<br>"
           break;
@@ -126,10 +118,9 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
       $('.class_card_header').html(info_html_header);
       $('.class_card_notes').html(info_html_notes);
       $('.class_card_body').html(info_html);
+      $('#class_selected_cards').load("/game/selected_class_cards?" + $.param({class_selected_id:player_one_class_id}));
     });
   });
-
-
 
   $('#class_information').show();
 });
@@ -139,10 +130,10 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
 //    Updates the class_card_panel with information about selected class
 //
 $(document).on('change', 'input[type=radio][name=opponent_options]', function() {
-  opponent_selected = $(this).val();
+  opponent_class_id = $(this).val();
   console.log("button selection changed to " + $(this).val());
 
-  var filters = {'opponent_selected': opponent_selected}
+  var filters = {'opponent_selected': opponent_class_id}
 
   // ================================
   //  GETTING OPPONENT INFO
@@ -153,12 +144,6 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
   $.getJSON('game/get_opponent_info', filters, function(data) {
     $.each(data, function(node_id, node_data) {
       if(node_id == 'created_at' || node_id == 'updated_at') {
-        return true;
-      }
-      if(node_id == 'id') {
-        console.log("id node " + node_data);
-        opponent_class_id = node_data;
-        $('#opponent_selected_cards').load("/game/opponent_class_cards?" + $.param({opponent_selected_id:opponent_class_id}));
         return true;
       }
 
@@ -192,6 +177,11 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
           break;
         case 'ally':
           info_html += "<b>ALLY: </b>"
+          info_html += node_data
+          info_html += "<br>"
+          break;
+        case 'turn_priority':
+          info_html += "<b>Turn Order: </b>"
           info_html += node_data
           info_html += "<br>"
           break;
@@ -212,13 +202,13 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
 
 // C. START BUTTON
 $(document).on('click', "#start_new_game", function(e) {
-  console.log("Oppenent selected: " + opponent_selected);
-  console.log("starting game with " + class_selected);
+  console.log("Oppenent selected: " + opponent_class_id);
+  console.log("starting game with " + player_one_class_id);
 
-  if(typeof opponent_selected == 'undefined') {
+  if(typeof opponent_class_id == 'undefined') {
     $( "#error_popup" ).html('Please select an opponent!');
     view_error_popup();
-  } else if (typeof class_selected == 'undefined') {
+  } else if (typeof player_one_class_id == 'undefined') {
     $( "#error_popup" ).html('You need to select a class.');
     view_error_popup();
   } else {
@@ -226,6 +216,7 @@ $(document).on('click', "#start_new_game", function(e) {
     $('#class_selected_cards').html("");
     $('#gameplay_info').html("");
     $('#main_screen_render').load("/game/setup_new_game?" + $.param({class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id}), function() {
+      $('#opponent_play_cards').load("/game/setup_ai_play_hand?" + $.param({opponent_selected_id:opponent_class_id}));
       update_info_boxes();
     });
   }
@@ -282,14 +273,9 @@ $(document).on('click', '#card_to_remove_from_hand', function() {
 $(document).on('click', '#ready_play_button', function() {
 
   card_count = parseInt($(this).data('count'));
+  card_ids = parseInt($(this).data('current_hand'));
   console.log("Playing with " + card_count);
-  if(card_count < 3) {
-    $( "#error_popup" ).html('Must select 3 cards!');
-    $( "#error_popup" ).dialog( "open" );
-  } else {
-    $( "#error_popup" ).html('Awesome, ready to play(soon!)');
-    $( "#error_popup" ).dialog( "open" );
-  }
+  $('#player_hand_cards').load("/game/start_round?" + $.param({class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, card_ids:card_ids}));
 });
 
 

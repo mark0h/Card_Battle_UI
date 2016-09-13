@@ -1,4 +1,4 @@
-<!-- GETS VARIABLE FROM play_game.rb -->
+<!-- GETS VARIABLE FROM pre_round_setup.rb -->
 
 <div id="player_deck_show" title="DECK"></div>
 
@@ -10,7 +10,7 @@
 
     <div class='panel panel-default'>
       <div class='panel-heading'>
-        <h3 class='panel-title default_panel_header'>GAMEPLAY</h3>
+        <h3 class='panel-title default_panel_header'>Round <%= @round_number %>: Setup</h3>
       </div>
 
       <div class='panel-body'>
@@ -33,8 +33,8 @@
         <div class='row' id='gameplay-middle'>
           <div class='col-sm-1'>
             <hr>
-            <b>ROUND</b>
-            <div id='round_info'></div>
+            <b>ROUND <%= @round_number %>:</b>
+            <i><div id='round_info'></div></i>
           </div>
           <div class='col-sm-11'></div>
 

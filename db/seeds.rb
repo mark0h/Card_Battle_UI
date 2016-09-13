@@ -26,3 +26,13 @@ SkillCard.create(name: 'Dragon Roar', class_id: 1, card_type: 'buff', cost: 2, a
 SkillCard.create(name: 'Death by Axe', class_id: 1, card_type: 'attack', cost: 4, attack_type: 'mp', attack_targets: 2, damage: 12, description: 'Seek the blood of all your enemies while gaining Unstoppable, reducing the cost of all skills to nothing this round.', bonus_method: 'barbarian_deathbyaxe', buff_id: nil, debuff_id: nil, cooldown: 1, image_path: 'deathbyaxe.png')
 SkillCard.create(name: 'Axe Bezerker', class_id: 1, card_type: 'attack', cost: 3, attack_type: 'mp', attack_targets: 2, damage: 8, description: 'Attack all targets, or does +2 damage to single target.', bonus_method: 'barbarian_bezerker', buff_id: nil, debuff_id: nil, cooldown: 1, image_path: 'bezerker.png')
 SkillCard.create(name: 'Tribal Totem', class_id: 1, card_type: 'buff', cost: 3, attack_type: 'mp', attack_targets: 1, damage: 0, description: 'Grants 2 random buffs.', bonus_method: 'barbarian_totem', buff_id: nil, debuff_id: nil, cooldown: 1, image_path: 'totem.png')
+
+
+CardPriority.create(class_id: 1, card_id: 1, opponent_class_id: 0, energy_cost: 1, priority: 2)
+CardPriority.create(class_id: 1, card_id: 2, opponent_class_id: 0, energy_cost: 1, priority: 3)
+CardPriority.create(class_id: 1, card_id: 3, opponent_class_id: 0, energy_cost: 1, priority: 1)
+CardPriority.create(class_id: 1, card_id: 4, opponent_class_id: 0, energy_cost: 2, priority: 4)
+CardPriority.create(class_id: 1, card_id: 5, opponent_class_id: 0, energy_cost: 2, priority: 10)
+CardPriority.create(class_id: 1, card_id: 6, opponent_class_id: 0, energy_cost: 4, priority: 8)
+CardPriority.create(class_id: 1, card_id: 7, opponent_class_id: 0, energy_cost: 3, priority: 7)
+CardPriority.create(class_id: 1, card_id: 8, opponent_class_id: 0, energy_cost: 3, priority: 9)

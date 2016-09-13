@@ -3,8 +3,8 @@ module CardInfo
 
   def get_class_info
     logger.info "Running get_class_info"
-    name = params[:class_selected].gsub(/_select/,'')
-    @class_info = ClassCard.where(name: name).first
+    selected_id = params[:class_selected].gsub(/_select/,'').to_i
+    @class_info = ClassCard.find(selected_id)
 
     logger.info "class_info: #{@class_info.inspect}"
 
@@ -13,8 +13,9 @@ module CardInfo
 
   def get_opponent_info
     logger.info "Running get_class_info"
-    name = params[:opponent_selected].gsub(/_opponent/,'')
-    @opponent_info = ClassCard.where(name: name).first
+    selected_id = params[:opponent_selected].gsub(/_opponent/,'').to_i
+    @opponent_info = ClassCard.find(selected_id)
+
 
     logger.info "opponent_info: #{@opponent_info.inspect}"
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910083304) do
+ActiveRecord::Schema.define(version: 20160913010845) do
 
   create_table "card_groups", force: :cascade do |t|
     t.integer "game_id"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 20160910083304) do
     t.integer "user_id"
   end
 
+  create_table "card_priorities", force: :cascade do |t|
+    t.integer  "class_id"
+    t.integer  "card_id"
+    t.integer  "opponent_class_id"
+    t.integer  "energy_cost"
+    t.integer  "priority"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "class_cards", force: :cascade do |t|
     t.string   "name"
     t.integer  "health"
@@ -36,9 +46,10 @@ ActiveRecord::Schema.define(version: 20160910083304) do
     t.integer  "rs"
     t.text     "notes"
     t.string   "ally"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "image_path"
+    t.integer  "turn_priority"
   end
 
   create_table "games", force: :cascade do |t|

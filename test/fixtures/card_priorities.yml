@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  class_id: 1
+  card_id: MyString
+  integer: MyString
+  opponent_class: 1
+  energy_cost: 1
+  priority: 1
+
+two:
+  class_id: 1
+  card_id: MyString
+  integer: MyString
+  opponent_class: 1
+  energy_cost: 1
+  priority: 1
