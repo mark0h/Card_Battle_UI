@@ -53,7 +53,7 @@ $(document).on('click', '#my_games_button', function() {
 
 $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
   console.log("button selection changed to " + $(this).val());
-  player_one_class_id = $(this).val();
+  player_one_class_id = $(this).val().replace("_select", "");
 
   var filters = {'class_selected': player_one_class_id}
 
@@ -130,7 +130,7 @@ $(document).on('change', 'input[type=radio][name=class_options]', function(e) {
 //    Updates the class_card_panel with information about selected class
 //
 $(document).on('change', 'input[type=radio][name=opponent_options]', function() {
-  opponent_class_id = $(this).val();
+  opponent_class_id = $(this).val().replace("_opponent", "");
   console.log("button selection changed to " + $(this).val());
 
   var filters = {'opponent_selected': opponent_class_id}
