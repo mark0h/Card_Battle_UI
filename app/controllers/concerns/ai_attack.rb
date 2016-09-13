@@ -1,29 +1,50 @@
 module AiAttack
   extend ActiveSupport::Concern
 
-  def barbarian_ai
-    game_id = session[:game_id]
-    game_info = Game.find(game_id)
-    energy = game_info.round
-    energy = 5 if energy > 5  #CANNOT HAVE MORE THAN 5 energy
-    priority_list = []
+  def ai_attack_card(opponent_class_id)
+    card_to_play = ""
+    current_game_id = session[:game_id]
 
-    #Loop through card hand
-    CardGroup.where(game_id: game_id, user_id: 0, current_hand_card: true).each do |card|
+    logger.info "Running ai_attack_card: opponent_class_id: #{opponent_class_id}"
+    total_energy = Game.find(current_game_id).p2_energy
+
+    card_ids = CardGroup.select("card_id").where(game_id: current_game_id, user_id: 0, current_hand_card: true)
+
+    CardPriority.where(class_id: opponent_class_id, card_id: card_ids).order(priority: :desc).each do |priority_card|
+      if total_energy <= priority_card.energy_cost
+        if card_to_play == ""
+          logger.info "ai_attack_card play card: #{priority_card.inspect}"
+          card_to_play = SkillCard.find(priority_card.card_id)
+          update_energy(priority_card.energy_cost, current_game_id)
+
+          #Set card to cooldown deck
+          cooldown_timer = SkillCard.select("cooldown").find(priority_card.card_id)
+          card_used = CardGroup.where(game_id: current_game_id, user_id: 0, card_id: priority_card.card_id).first
+          card_used.update(current_hand_card: false, deck_card: false, cooldown_card: true, inplay_card: false, cooldown_remaining: cooldown_timer)
+        end
+      end
     end
 
+    return card_to_play
+
   end
 
-  def guardian_ai
+  def update_energy(used_energy, game_id)
+    current_game = Game.find(game_id)
+    new_energy = current_game.p2_energy - used_energy
+    current_game.update(p2_energy: new_energy)
   end
 
-  def assassin_ai
+  def update_health(damage, damage_type, class_id)
+
+    logger.info "Opponent took #{damage} damage of type #{damage_type}. They are a class #{class_id}"
   end
 
-  def summoner_ai
-  end
 
-  def druid_ai
+  def update_ai_play_hand
+    @opponent_hand = CardGroup.where(game_id: current_game_id, user_id: 0, current_hand_card: true)
+    logger.info "@opponent_hand: #{@opponent_hand.inspect}"
+    render partial: "game/gameplay/opponent_hand",layout: false
   end
 
 end

@@ -3,6 +3,12 @@
 module Attack
   extend ActiveSupport::Concern
 
+  def start_attack
+    current_game_id = session[:game_id]
+    @player_one_play_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
+    render partial: "game/gameplay/player_hand/attack_round_hand", layout: false
+  end
+
 
 
 

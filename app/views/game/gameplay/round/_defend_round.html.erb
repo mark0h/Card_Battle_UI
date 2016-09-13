@@ -1,0 +1,57 @@
+<!-- GETS VARIABLE FROM pre_round_setup.rb -->
+
+<div id="error_popup" title="Error">
+</div>
+
+<div class='row'>
+  <div class='col-sm-11'>
+
+    <div class='panel panel-default'>
+      <div class='panel-heading'>
+        <h3 class='panel-title default_panel_header'>Round <%= @round_number %>: Defend</h3>
+      </div>
+
+      <div class='panel-body'>
+        <!-- OPPONENT CARD VIEW         -->
+        <div class='row' id='gameplay-opponent'>
+          <div class='col-sm-1'>
+            <b>OPPONENT</b>
+            <div id='opponent_info'></div>
+          </div>
+          <div class='col-sm-2'>
+            <%= image_tag("#{@opponent_class.image_path}", height: 196, width: 140) %>
+          </div>
+          <div class='col-sm-8'>
+            <span id='opponent_play_cards'></span>
+          </div>
+        </div>
+
+
+        <!-- MIDDLE PLAY VIEW         -->
+        <div class='row' id='gameplay-middle'>
+          <div class='col-sm-1'>
+            <div id='round_info'></div>
+          </div>
+          <div class='col-sm-11'></div>
+
+        </div>
+        <!-- PLAYER CARD VIEW         -->
+        <div class='row' id='gameplay-player'>
+          <div class='col-sm-1'>
+            <hr>
+            <b>PLAYER</b>
+            <div id='player_info'></div>
+          </div>
+          <div class='col-sm-2'>
+            <%= image_tag("#{@player_one_class.image_path}", height: 196, width: 140, id: 'player_deck_defend') %>
+          </div>
+          <div class='col-sm-8'>
+            <span id='player_hand_cards'></span>
+          </div>
+
+        </div>
+
+    </div>
+
+  </div>
+</div>

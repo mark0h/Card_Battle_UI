@@ -5,7 +5,7 @@
     <% @player_one_current_hand.each do |card_value| %>
     <!-- height: 160, width: 114 -->
       <% card_ids.push(card_value.card_id) %>
-      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.image_path.gsub(/.png/,'')}", data: { cardvalue: "#{card_value.card_id}_selected"}, id: 'card_to_remove_from_hand') %>
+      <%= image_tag("#{card_value.image_path}", height: 196, width: 140, title: "#{card_value.image_path.gsub(/.png/,'')}", data: { cardvalue: "#{card_value.card_id}_selected"}, id: 'card_to_remove_from_hand') %>  
     <% end %>
   </div>
 

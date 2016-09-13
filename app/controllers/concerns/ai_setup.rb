@@ -38,19 +38,11 @@ module AiSetup
 
   end
 
-  def barbarian_setup
+  def return_cooldown_cards
+    CardGroup.where(game_id: current_game_id, user_id: 0, cooldown_card: true, cooldown_remaining: 0).each do |card|
+      card.update(current_hand_card: false, deck_card: true, cooldown_card: false, inplay_card: false)
+    end
   end
 
-  def guardian_setup
-  end
-
-  def assassin_setup
-  end
-
-  def summoner_setup
-  end
-
-  def druid_setup
-  end
 
 end

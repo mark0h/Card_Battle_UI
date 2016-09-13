@@ -13,18 +13,24 @@
 //    C. PLAY BUTTON
 // 4. POPUP BOXES
 //    A. PLAY BUTTON CARD COUNT CHECK
+// 10. ATTACK CARD CHOICE BUTTONS
 
 //Global Variables
 var player_one_class_id;
 var opponent_class_id;
 var card_count;
 var new_game_start;
+var player_setup;
 
 // 1. MAIN MENU
 $(document).on('click', '#main_menu_start', function() {
-  if ($("#player_deck_show[_dialogInitialized]").length == 1) {
-    $('#player_deck_show').dialog('destroy');
-  }
+  $("#player_deck_show").dialog({
+    autoOpen: false
+  });
+  $('#player_deck_show').dialog('destroy');
+  // if ($("#player_deck_show[_dialogInitialized]").length == 1) {
+  //   $('#player_deck_show').dialog('destroy');
+  // }
   $('#main_screen_render').html("");
   $('#main_screen_render').load("/game/new_game_render");
 });
@@ -204,6 +210,7 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
 // C. START BUTTON
 $(document).on('click', "#start_new_game", function(e) {
   new_game_start = true;
+  player_setup = true;
   console.log("Oppenent selected: " + opponent_class_id);
   console.log("starting game with " + player_one_class_id);
 
@@ -242,7 +249,9 @@ $(document).on('click', '#cancel_new_game', function() {
 // A. DECK CONTROLS
 //WHEN CLICKING THE CLASS CARD DECK
 $(document).on('click', "#player_deck_stack", function() {
-  view_player_deck();
+  if(player_setup == true) {
+    view_player_deck();
+  }
 });
 
 //      B. ADDING/REMOVING CARD TO HAND
@@ -272,11 +281,29 @@ $(document).on('click', '#card_to_remove_from_hand', function() {
 //        C. PLAY BUTTON
 $(document).on('click', '#ready_play_button', function() {
   new_game_start = false;
+  player_setup = false;
+  if ($("#player_deck_show[_dialogInitialized]").length == 1) {
+    $('#player_deck_show').dialog('destroy');
+  }
   card_count = parseInt($(this).data('count'));
   card_ids = parseInt($(this).data('current_hand'));
   console.log("Playing with " + card_count);
   $('#player_hand_cards').load("/game/start_round?" + $.param({class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, card_ids:card_ids}));
   update_info_boxes();
+});
+
+//       D. ATTACK BUTTON
+$(document).on('click', "#attack_button", function(e) {
+  var attack_card_selected = $('input[type=radio][name=attack_selection]:checked').val().replace("_attack", "");
+
+
+  if(typeof attack_card_selected == 'undefined') {
+    $( "#error_popup" ).html('Please select a card to attack with, or skip if no more cards left. ');
+    view_error_popup();
+  } else {
+    console.log("attack card selected: " + attack_card_selected);
+  }
+
 });
 
 
@@ -287,7 +314,7 @@ $(document).on('click', '#ready_play_button', function() {
 //         A. PLAY BUTTON CARD COUNT CHECK
 function update_info_boxes() {
   $('#player_info').load("/game/update_player_info?" + $.param({class_selected_id:player_one_class_id}));
-  $('#opponent_info').load("/game/update_opponent_info?" + $.param({class_selected_id:opponent_class_id}));
+  $('#opponent_info').load("/game/update_opponent_info?" + $.param({opponent_selected_id:opponent_class_id}));
   console.log("updating round info with new_game_start value: " + new_game_start);
   $('#round_info').load("/game/update_round_info?" + $.param({new_game_start:new_game_start}));
 }
@@ -323,3 +350,22 @@ function refresh_player_deck(){
   $('#dialog').dialog('destroy');
   view_player_deck();
 }
+
+// ============================================
+//         5. GAMEPLAY MIDDLE WINDOW
+// ============================================
+
+//update after opponent attacks
+function update_gameplay_middle(attack_card) {
+  $('#opponent_play_cards').load("/game/update_ai_play_hand");
+  $('#gameplay_middle_update').load("/game/update_gameplay_middle?" + $.param({opponent_attack_card_id:attack_card}));
+}
+
+// ============================================
+//         10. ATTACK CARD CHOICE BUTTONS
+// ============================================
+$(document).on('change', 'input[type=radio][name=attack_selection]', function(e) {
+  var attack_card_selected = $(this).val().replace("_attack", "");
+  console.log("attacking with " + attack_card_selected);
+
+});

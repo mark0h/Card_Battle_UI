@@ -60,6 +60,10 @@
   border-radius: 0px;
 }
 
+.btn.active, .btn:active {
+    background-color: #4d82bd;
+}
+
 .btn-group-justified .btn {
   border: 0px;
   border-radius: 0px;
