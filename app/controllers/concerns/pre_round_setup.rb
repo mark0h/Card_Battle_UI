@@ -154,7 +154,7 @@ module PreRoundSetup
     current_game_id = session[:game_id]
     @player_current_hand = SkillCard.find(params[:card_ids])
     @player_one_class = ClassCard.find(params[:class_selected_id])
-    @opponent_class = ClassCard.find(params[:opponent_selected_id])
+    @opponent_class = ClassCard.find(params[:opponent_selected_id]).gsub(/_selected/,'').to_i
     @whose_turn = Game.find(current_game_id).first.whose_turn
 
 

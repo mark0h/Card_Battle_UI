@@ -3,10 +3,11 @@ module AiSetup
 
 
   def setup_ai_play_hand
-    logger.info "Running setup_ai_play_hand: opponent_class_id: #{opponent_class_id}"
+
     current_game_id = session[:game_id]
 
-    opponent_class_id = params[:opponent_selected_id]
+    opponent_class_id = params[:opponent_selected_id].gsub(/_selected/,'').to_i
+    logger.info "Running setup_ai_play_hand: opponent_class_id: #{opponent_class_id}"
     total_energy = Game.find(current_game_id).p2_energy
 
     priority_energy = total_energy - 1
@@ -30,9 +31,9 @@ module AiSetup
       end
     end
 
-    @opponent_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
+    @opponent_hand = CardGroup.where(game_id: current_game_id, user_id: 0, current_hand_card: true)
     logger.info "@opponent_hand: #{@opponent_hand.inspect}"
-    render partial: "game/gameplay/player_hand/pre_round_hand",layout: false
+    render partial: "game/gameplay/opponent_hand",layout: false
 
 
   end
