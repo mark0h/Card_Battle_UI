@@ -5,7 +5,7 @@
     <div class="btn-group" id="defend_card_selector" data-toggle="buttons">
       <% @player_one_play_hand.each do |class_card| %>
       <label class="btn btn-default" for="<%= class_card.card_id %>_select">
-        <input type="radio" name="attack_selection" id="<%= class_card.card_id %>_attack" value="<%= class_card.card_id %>_attack"><%= image_tag("#{class_card.image_path}", height: 196, width: 140, title: "#{class_card.image_path.gsub(/.png/,'')}", id: 'attack_card_select') %></input>
+        <input type="radio" name="defend_selection" id="<%= class_card.card_id %>_defend" value="<%= class_card.card_id %>_defend"><%= image_tag("#{class_card.image_path}", height: 196, width: 140, title: "#{class_card.image_path.gsub(/.png/,'')}", id: 'defend_card_select') %></input>
       </label>
       <% end %>
     </div>
@@ -20,5 +20,5 @@
 </div>
 
 <script type='text/javascript'>
-  update_gameplay_middle("<%= @opponent_attack_card.id %>");
+  update_gameplay_middle_opponent("<%= @opponent_attack_card.id %>");
 </script>

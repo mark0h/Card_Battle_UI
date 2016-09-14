@@ -150,21 +150,23 @@ module PreRoundSetup
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
 
+    case current_game.whose_turn
+    when 11
+      @whose_turn = "Player attacking"
+    when 12
+      @whose_turn = "Player defending"
+    when 21
+      @whose_turn = "Opponent attacking"
+    when 22
+      @whose_turn = "Opponent Defending"
+    end
+
     @round_number = current_game.round
 
     if params[:new_game_start] == "true"
       @round_phase = "Setup"
     else
-      case current_game.whose_turn
-      when 11
-        @round_phase = "Player attacking"
-      when 12
-        @round_phase = "Player defending"
-      when 21
-        @round_phase = "Opponent attacking"
-      when 22
-        @round_phase = "Opponent Defending"
-      end
+      @round_phase = @whose_turn
     end
 
     logger.info "@round_phase: #{@round_phase}"
@@ -188,10 +190,7 @@ module PreRoundSetup
 
   end
 
-  def update_gameplay_middle
-    @opponent_attack_card = params[:opponent_attack_card_id]
-    render partial: "game/gameplay/info_windows/gameplay_middle", layout: false
-  end
+  
 
 
 end

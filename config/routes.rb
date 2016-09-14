@@ -33,9 +33,15 @@ Rails.application.routes.draw do
   get '/game/update_opponent_info', to: 'game#update_opponent_info'
   get '/game/update_round_info', to: 'game#update_round_info'
   get '/game/update_gameplay_middle', to: 'game#update_gameplay_middle'
+  get '/game/update_gameplay_info', to: 'game#update_gameplay_info'
+
+  #THIS DETERMINES WHT THE PLAYER DID, ATTACK, DEFEND, SKIP...
+  get '/game/determine_action', to: 'game#determine_action'
 
   # DEFENDING routes
   get '/game/update_ai_play_hand', to: 'game#update_ai_play_hand'
+  get '/game/update_player_hand', to: 'game#update_player_hand'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

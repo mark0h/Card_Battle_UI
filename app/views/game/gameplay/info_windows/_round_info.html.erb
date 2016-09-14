@@ -1,6 +1,13 @@
+<!-- Uses update_round_info from pre_round_setup.rb -->
 <hr>
 <b>ROUND <%= @round_number %>:</b>
 <div class='round_info'>
   <large><i><%= @round_phase %></i></large>
   <br><br><br>
+
+  <% if @whose_turn =~ /Player/i %>
+    <%= image_tag("down_arrow.png", height: 35, width: 21, title: "player's turn") %>
+  <% else %>
+    <%= image_tag("up_arrow.png", height: 35, width: 21, title: "opponent's turn") %>
+  <% end %>
 </div>

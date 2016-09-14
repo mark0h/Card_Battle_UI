@@ -1,1 +1,45 @@
-<%= @opponent_attack_card %> used!
+<div id="error_popup" title="Error">
+</div>
+
+
+<% if @opponent_attacking %>
+  <div class='row'>
+    <div class='col-sm-2'><small><b>You have been attacked with:</b></small></div>
+    <div class='col-sm-3'>
+      <%= image_tag("#{@opponent_attack_card.image_path}", height: 196, width: 140, title: "#{@opponent_attack_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
+    </div>
+    <% if @defense_card %>
+
+      <% if @defense_error %>
+        <script type='text/javascript'>
+          $( "#error_popup" ).html("<%= @error_message %>");
+          view_error_popup();
+        </script>
+      <% else %>
+        <div class='col-sm-5'>
+          <div class='col-sm-4'><small><b>You defend yourself with:</b></small></div>
+          <%= image_tag("#{@defense_card.image_path}", height: 196, width: 140, title: "#{@defense_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
+        </div>
+        <div class='col-sm-2'>
+          <small>
+            <table style='border:0px;padding:10px'>
+              <tr>
+                <td><b>Damage taken: </b></td>
+                <td style='padding:10px'><%= @damage_taken %></td>
+              </tr>
+              <tr>
+                <td><b>Damage countered:</b></td>
+                <td style='padding:10px'><%= @damage_returned %></td>
+              </tr>
+            </table>
+      <% end %>
+
+    <% else %>
+      <div class='col-sm-2'></div>
+      <div class='col-sm-3'>Decide what you are going to do. <br><br><b>Skip</b> if you have no defend cards.</div>
+    <% end %>
+  </div>
+<% @damage_taken %>
+<% @damage_returned %>
+<% else %>
+<% end %>

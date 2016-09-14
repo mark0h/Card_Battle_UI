@@ -306,6 +306,18 @@ $(document).on('click', "#attack_button", function(e) {
 
 });
 
+//       E. DEFEND BUTTON
+$(document).on('click', "#defend_button", function(e) {
+  var defend_card_selected = $('input[type=radio][name=defend_selection]:checked').val().replace("_attack", "");
+
+  $('#gameplay_middle_update').load("/game/determine_action?" + $.param({action_played:'defend', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, selected_card_id: defend_card_selected}), function() {
+    update_info_boxes();
+    $('#player_hand_cards').load("/game/update_player_hand");
+    $('#opponent_play_cards').load("/game/update_ai_play_hand");
+  });
+
+});
+
 
 // ============================================
 //         4. POPUP BOXES
@@ -320,6 +332,7 @@ function update_info_boxes() {
 }
 
 function view_error_popup() {
+  console.log("error popped up!");
   $('#error_popup').dialog({
       title: 'ERROR' ,
       // modal: 'true',
@@ -356,9 +369,19 @@ function refresh_player_deck(){
 // ============================================
 
 //update after opponent attacks
-function update_gameplay_middle(attack_card) {
+function update_gameplay_middle_opponent(attack_card) {
   $('#opponent_play_cards').load("/game/update_ai_play_hand");
-  $('#gameplay_middle_update').load("/game/update_gameplay_middle?" + $.param({opponent_attack_card_id:attack_card}));
+  $('#gameplay_middle_update').load("/game/update_gameplay_middle?" + $.param({player_attacking:false, attack_card_id:attack_card}), function() {
+    update_info_boxes();
+  });
+}
+
+//update after opponent attacks
+function update_gameplay_middle_player(attack_card) {
+  $('#opponent_play_cards').load("/game/update_ai_play_hand");
+  $('#gameplay_middle_update').load("/game/update_gameplay_middle?" + $.param({player_attacking:true, attack_card_id:attack_card}), function() {
+    update_info_boxes();
+  });
 }
 
 // ============================================
