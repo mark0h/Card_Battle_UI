@@ -6,7 +6,7 @@ class GameController < ApplicationController
   include Attack
   include Defend
   include AiSetup
-  include AiAttack
+  include AiAction
   include Barbarian
 
   def index

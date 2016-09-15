@@ -24,6 +24,11 @@
   display: none;
 }
 
+.nav{
+    max-height: 300px;
+    overflow-y:scroll;
+}
+
 //GAME INFO WINDOW
 .value_name {
   font-weight: bold;

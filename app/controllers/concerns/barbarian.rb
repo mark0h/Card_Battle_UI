@@ -14,32 +14,40 @@ module Barbarian
     return 0
   end
 
-  def barbarian_overpower(damage_type)
+  def barbarian_overpower(damage_type, attack_type)
+    attack_bonus = 0
     if damage_type == 'mp'
-      return -2
+      return {block: -2, damage_bonus: 0}
     end
-    return 0
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_groundslam
+  def barbarian_groundslam(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_insight
+  def barbarian_insight(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_whirlwind
+  def barbarian_whirlwind(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_roar
+  def barbarian_roar(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_deathbyaxe
+  def barbarian_deathbyaxe(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_bezerker
+  def barbarian_bezerker(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
-  def barbarian_totem
+  def barbarian_totem(damage_type, attack_type)
+    return {block: 0, damage_bonus: 0}
   end
 
 

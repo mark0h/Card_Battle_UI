@@ -21,6 +21,7 @@ var opponent_class_id;
 var card_count;
 var new_game_start;
 var player_setup;
+var player_attacking;
 
 // 1. MAIN MENU
 $(document).on('click', '#main_menu_start', function() {
@@ -294,28 +295,57 @@ $(document).on('click', '#ready_play_button', function() {
 
 //       D. ATTACK BUTTON
 $(document).on('click', "#attack_button", function(e) {
+  player_attacking = true
   var attack_card_selected = $('input[type=radio][name=attack_selection]:checked').val().replace("_attack", "");
+  $('#gameplay_middle_update').html("");
 
-
-  if(typeof attack_card_selected == 'undefined') {
-    $( "#error_popup" ).html('Please select a card to attack with, or skip if no more cards left. ');
-    view_error_popup();
-  } else {
-    console.log("attack card selected: " + attack_card_selected);
-  }
+  $('#gameplay_middle_update').load("/game/determine_action?" + $.param({action_played:'attack', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, selected_card_id: attack_card_selected}), function() {
+    update_info_boxes();
+    $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'none'}));
+    $('#opponent_play_cards').load("/game/update_ai_play_hand");
+  });
 
 });
 
 //       E. DEFEND BUTTON
 $(document).on('click', "#defend_button", function(e) {
+  player_attacking = false
   var defend_card_selected = $('input[type=radio][name=defend_selection]:checked').val().replace("_attack", "");
+  $('#gameplay_middle_update').html("");
 
   $('#gameplay_middle_update').load("/game/determine_action?" + $.param({action_played:'defend', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id, selected_card_id: defend_card_selected}), function() {
     update_info_boxes();
-    $('#player_hand_cards').load("/game/update_player_hand");
+    $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'none'}));
     $('#opponent_play_cards').load("/game/update_ai_play_hand");
   });
 
+});
+
+//       F. CONTINUE BUTTON
+$(document).on('click', "#continue_round_button", function(e) {
+  $('#gameplay_middle_update').html("");
+
+  $('#gameplay_middle_update').load("/game/determine_action?" + $.param({action_played:'continue_round', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id}), function() {
+    update_info_boxes();
+    if(player_attacking == true) {
+      $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'defend'}));
+    } else {
+      $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'attack'}));
+    }
+  });
+
+});
+
+//       G. SKIP ATTACK
+$(document).on('click', "#skip_attack_button", function(e) {
+  var opponent_skipped = $('#opponent_attack').data('opponentskipped');
+  console.log("opponent_skipped: " + opponent_skipped);
+});
+
+//       G. SKIP DEFEND
+$(document).on('click', "#skip_defend_button", function(e) {
+  var opponent_skipped = $('#opponent_attack').data('opponentskipped');
+  console.log("opponent_skipped: " + opponent_skipped);
 });
 
 
@@ -382,6 +412,13 @@ function update_gameplay_middle_player(attack_card) {
   $('#gameplay_middle_update').load("/game/update_gameplay_middle?" + $.param({player_attacking:true, attack_card_id:attack_card}), function() {
     update_info_boxes();
   });
+}
+
+// ============================================
+//         6. GAMEPLAY TICKER
+// ============================================
+function update_gameplay_ticker(info_string) {
+  $('#gameplay_info').append("<small>" + info_string + "</small><br><br>");
 }
 
 // ============================================

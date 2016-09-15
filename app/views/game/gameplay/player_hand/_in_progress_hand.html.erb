@@ -1,0 +1,13 @@
+<div class='row'>
+  <div class='col-sm-8'>
+
+    <div class="btn-group" id="class_selector" data-toggle="buttons">
+      <% @player_one_play_hand.each do |class_card| %>
+      <label class="btn btn-default" for="<%= class_card.card_id %>_select">
+        <input type="radio" name="attack_selection" id="<%= class_card.card_id %>_attack" value="<%= class_card.card_id %>_attack"><%= image_tag("#{class_card.image_path}", height: 196, width: 140, title: "#{class_card.image_path.gsub(/.png/,'')}", id: 'attack_card_select') %></input>
+      </label>
+      <% end %>
+    </div>
+
+  </div>
+</div>
