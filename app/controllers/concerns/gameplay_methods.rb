@@ -38,6 +38,22 @@ module GameplayMethods
 
   end
 
+  def verify_energy
+    current_game_id = session[:game_id]
+    current_game = Game.find(current_game_id)
+    p1_energy = current_game.p1_energy
+    play_card = SkillCard.find(params[:selected_card_id])
+    enough_energy = false
+
+    if p1_energy >= play_card.cost
+      enough_energy = true
+    end
+
+    return_hash = {play_card: play_card, enough_energy: enough_energy}
+
+    render json: return_hash
+
+  end
 
 
   def update_energy(used_energy, game_id)

@@ -55,7 +55,7 @@
 
 
 <!-- PLAYER ATTACKING -->
-<% else %>
+<% elsif @player_attacking %>
 
   <div class='row'>
     <div class='col-sm-2'><small><b>You attacked with:</b></small></div>
@@ -92,6 +92,7 @@
             </table>
             <br>
             <div class='btn btn-small btn-success' id='continue_round_button'>Continue</div>
+          </div>
 
             <script type='text/javascript'>
               update_gameplay_ticker("Player attacked for <%= @damage_returned %> damage.<br>Opponent countered for <%= @damage_taken %> damage.");
@@ -103,5 +104,10 @@
       <div class='col-sm-3'>Decide what you are going to do. <br><br><b>Skip</b> if you have no defend cards.</div>
     <% end %>
   </div>
+
+<% else %>
+
+
+
 
 <% end %>

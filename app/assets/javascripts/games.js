@@ -345,7 +345,18 @@ $(document).on('click', "#skip_attack_button", function(e) {
 //       G. SKIP DEFEND
 $(document).on('click', "#skip_defend_button", function(e) {
   var opponent_skipped = $('#opponent_attack').data('opponentskipped');
-  console.log("opponent_skipped: " + opponent_skipped);
+  var html_value = ""
+  html_value += "<div class='row'>"
+  html_value += "<div class='col-sm-2'><small><b>Opponent skipped</b</small></div>"
+  html_value += "<div class='col-sm-3'></div>"
+  html_value += "<div class='col-sm-4'><b>Player skipped</b></div>"
+  html_value += "<div class='col-sm-2'><br><br><br><div class='btn btn-small btn-success' id='next_round_button'>End Round</div></div>"
+  html_value += "</div>"
+  $('#gameplay_middle_update').html(html_value);
+  $('#player_hand_cards').load("/game/determine_action?" + $.param({action_played:'new_round', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id}), function() {
+    $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'none'}));
+    update_info_boxes();
+  });
 });
 
 

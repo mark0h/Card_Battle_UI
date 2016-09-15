@@ -10,7 +10,7 @@ module Attack
   # end
 
   def play_attack_card(attack_card_id, class_selected_id, opponent_selected_id)
-    logger.info "play_attack_card attack_card: #{attack_card_id}"
+    @player_attacking = true
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
 
