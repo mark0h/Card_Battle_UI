@@ -10,6 +10,8 @@ module GameHelper
     @player_games = Game.where(user_id: current_user.id)
   end
 
+  
+
 
   # -------------------------------
   #  The following 4 methods are for the DEVISE render pages

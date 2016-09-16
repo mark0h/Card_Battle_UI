@@ -15,11 +15,22 @@ module Barbarian
   end
 
   def barbarian_overpower(damage_type, attack_type)
-    attack_bonus = 0
-    if damage_type == 'mp'
-      return {block: -2, damage_bonus: 0}
+
+    if damage_type == 'mp' && attack_type == 'defense'
+      return {block: -2, damage_bonus: 0, allowed: true}
     end
-    return {block: 0, damage_bonus: 0}
+    return {block: 0, damage_bonus: 0, allowed: false, error_text: 'Overpower can only counter Melee Physical attacks. '}
+  end
+
+  def barbarian_overpower_use?(attack_type, play_hand_count)
+    if attack_type == 'defense'
+      return true
+    else
+      if play_hand_count < 2
+        return true
+      end
+    end
+
   end
 
   def barbarian_groundslam(damage_type, attack_type)
@@ -50,6 +61,44 @@ module Barbarian
     return {block: 0, damage_bonus: 0}
   end
 
+  def barbarian_overpower_use?(attack_type, play_hand_count)
+    if attack_type == 'defense'
+      return true
+    else
+      if play_hand_count < 2
+        return true
+      end
+    end
+
+  end
+
+  def barbarian_groundslam_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_insight_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_whirlwind_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_roar_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_deathbyaxe_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_bezerker_use?(attack_type, play_hand_count)
+    return true
+  end
+
+  def barbarian_totem_use?(attack_type, play_hand_count)
+    return true
+  end
 
 
 end

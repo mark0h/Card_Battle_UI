@@ -1,47 +1,25 @@
 <div id="error_popup" title="Error">
 </div>
 
-<!-- OPPONENT ATTACKING -->
-<% if @opponent_attacking %>
+<% if @death_status == true %>
+  <%= image_tag("#{@death_img}_death.png", title: "#{@death_img}_death", id: 'death_status_banner') %>
+  <script type='text/javascript'>
+    set_death_status();
+  </script>
+<% else %>
 
-  <% if @opponent_attack_card %>
+  <!-- OPPONENT ATTACKING -->
+  <% if @opponent_attacking %>
 
-    <div class='row'>
-      <div class='col-sm-2' id='opponent_attack' data-opponentskipped='false'><small><b>Opponent attacked with:</b></small></div>
-      <div class='col-sm-3'>
-        <%= image_tag("#{@opponent_attack_card.image_path}", height: 196, width: 140, title: "#{@opponent_attack_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
-      </div>
-      <% if @player_skipped %>
-        <div class='col-sm-5'><b>You skipped</b></div>
-        <div class='col-sm-2'>
-          <small>
-            <table style='border:0px;padding:10px'>
-              <tr>
-                <td><b>Damage taken: </b></td>
-                <td style='padding:10px'><%= @damage_taken %></td>
-              </tr>
-              <tr>
-                <td><b>Damage countered:</b></td>
-                <td style='padding:10px'><%= @damage_returned %></td>
-              </tr>
-            </table>
-          </small>
-          <br>
-          <div class='btn btn-small btn-success' id='continue_round_button'>Continue</div>
+    <% if @opponent_attack_card %>
+
+      <div class='row'>
+        <div class='col-sm-2' id='opponent_attack' data-opponentskipped='false'><small><b>Opponent attacked with:</b></small></div>
+        <div class='col-sm-3'>
+          <%= image_tag("#{@opponent_attack_card.image_path}", height: 196, width: 140, title: "#{@opponent_attack_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
         </div>
-
-          <script type='text/javascript'>
-            update_gameplay_ticker("Opponent attacked for <%= @damage_taken %> damage.<br>Player countered for <%= @damage_returned %> damage.");
-          </script>
-
-      <% else %>   <!-- @player_skipped else -->
-
-        <% if @defense_card %>
-
-          <div class='col-sm-5'>
-            <div class='col-sm-4'><small><b>You defended with:</b></small></div>
-            <%= image_tag("#{@defense_card.image_path}", height: 196, width: 140, title: "#{@defense_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
-          </div>
+        <% if @player_skipped %>
+          <div class='col-sm-5'><b>You skipped</b></div>
           <div class='col-sm-2'>
             <small>
               <table style='border:0px;padding:10px'>
@@ -56,77 +34,104 @@
               </table>
             </small>
             <br>
-            <div class='btn btn-small btn-success' id='continue_round_button'>Continue</div>
+            <button type="button" class="btn-sm btn-success btn-sm"  id='continue_round_button'>Continue</button>
           </div>
 
             <script type='text/javascript'>
               update_gameplay_ticker("Opponent attacked for <%= @damage_taken %> damage.<br>Player countered for <%= @damage_returned %> damage.");
             </script>
 
-        <% else %> <!-- if @defense_card -->
-          <div class='col-sm-2'></div>
-          <div class='col-sm-3'>Decide what you are going to do. <br><br><b>Skip</b> if you have no defend cards.</div>
-        <% end %>  <!-- if @defense_card -->
+        <% else %>   <!-- @player_skipped else -->
 
-      <% end %>  <!-- @player_skipped end -->
+          <% if @defense_card %>
 
-    </div>
-  <% else %> <!-- if @opponent_attack_card is nil-->
-    <div class='col-sm-2' id='opponent_attack' data-opponentskipped='true'><small><b>Opponent skipped. </b></small></div>
-      <% if @player_skipped %>
-        <script type='text/javascript'>
-          everyone_skipped();
-        </script>
-      <% end %>
+            <div class='col-sm-5'>
+              <div class='col-sm-4'><small><b>You defended with:</b></small></div>
+              <%= image_tag("#{@defense_card.image_path}", height: 196, width: 140, title: "#{@defense_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
+            </div>
+            <div class='col-sm-2'>
+              <small>
+                <table style='border:0px;padding:10px'>
+                  <tr>
+                    <td><b>Damage taken: </b></td>
+                    <td style='padding:10px'><%= @damage_taken %></td>
+                  </tr>
+                  <tr>
+                    <td><b>Damage countered:</b></td>
+                    <td style='padding:10px'><%= @damage_returned %></td>
+                  </tr>
+                </table>
+              </small>
+              <br>
+              <button type="button" class="btn-sm btn-success btn-sm"  id='continue_round_button'>Continue</button>
+            </div>
 
-  <% end %>
+              <script type='text/javascript'>
+                update_gameplay_ticker("Opponent attacked for <%= @damage_taken %> damage.<br>Player countered for <%= @damage_returned %> damage.");
+              </script>
 
+          <% else %> <!-- if @defense_card -->
+            <div class='col-sm-2'></div>
+            <div class='col-sm-3'>Decide what you are going to do. <br><br><b>Skip</b> if you have no defend cards.</div>
+          <% end %>  <!-- if @defense_card -->
 
-<!-- PLAYER ATTACKING -->
-<% elsif @player_attacking %>
+        <% end %>  <!-- @player_skipped end -->
 
-  <div class='row'>
-    <% if @attack_card %>
-      <div class='col-sm-2'><small><b>You attacked with:</b></small></div>
-      <div class='col-sm-3'>
-        <%= image_tag("#{@attack_card.image_path}", height: 196, width: 140, title: "#{@attack_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
       </div>
-      <% if @ai_skipped %>
-        <div class='col-sm-4'><small><b>Opponent skipped</b></small></div>
-      <% else %>
-          <div class='col-sm-5'>
-            <div class='col-sm-4'><small><b>Opponent defended with:</b></small></div>
-            <%= image_tag("#{@opponent_defense_card.image_path}", height: 196, width: 140, title: "#{@opponent_defense_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
-          </div>
-        <% end %>
-        <div class='col-sm-2'>
-          <small>
-            <table style='border:0px;padding:10px'>
-              <tr>
-                <td><b>Damage dealt: </b></td>
-                <td style='padding:10px'><%= @damage_returned %></td>
-              </tr>
-              <tr>
-                <td><b>Damage received:</b></td>
-                <td style='padding:10px'><%= @damage_taken %></td>
-              </tr>
-            </table>
-            <br>
-            <div class='btn btn-small btn-success' id='continue_round_button'>Continue</div>
-          </div>
-
+    <% else %> <!-- if @opponent_attack_card is nil-->
+      <div class='col-sm-2' id='opponent_attack' data-opponentskipped='true'><small><b>Opponent skipped. </b></small></div>
+        <% if @player_skipped %>
           <script type='text/javascript'>
-            update_gameplay_ticker("Player attacked for <%= @damage_returned %> damage.<br>Opponent countered for <%= @damage_taken %> damage.");
+            everyone_skipped();
           </script>
+        <% end %>
 
-      <% else %>
-        <div class='col-sm-2'><b>You skipped</b></div>
     <% end %>
-  </div>
-
-<% else %>
 
 
+  <!-- PLAYER ATTACKING -->
+  <% elsif @player_attacking %>
+
+    <div class='row'>
+      <% if @attack_card %>
+        <div class='col-sm-2'><small><b>You attacked with:</b></small></div>
+        <div class='col-sm-3'>
+          <%= image_tag("#{@attack_card.image_path}", height: 196, width: 140, title: "#{@attack_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
+        </div>
+        <% if @ai_skipped %>
+          <div class='col-sm-4'><small><b>Opponent skipped</b></small></div>
+        <% else %>
+            <div class='col-sm-5'>
+              <div class='col-sm-4'><small><b>Opponent defended with:</b></small></div>
+              <%= image_tag("#{@opponent_defense_card.image_path}", height: 196, width: 140, title: "#{@opponent_defense_card.image_path.gsub(/.png/,'')}", id: 'opponent_hand') %>
+            </div>
+          <% end %>
+          <div class='col-sm-2'>
+            <small>
+              <table style='border:0px;padding:10px'>
+                <tr>
+                  <td><b>Damage dealt: </b></td>
+                  <td style='padding:10px'><%= @damage_returned %></td>
+                </tr>
+                <tr>
+                  <td><b>Damage received:</b></td>
+                  <td style='padding:10px'><%= @damage_taken %></td>
+                </tr>
+              </table>
+              <br>
+              <button type="button" class="btn-sm btn-success btn-sm"  id='continue_round_button'>Continue</button>
+            </div>
+
+            <script type='text/javascript'>
+              update_gameplay_ticker("Player attacked for <%= @damage_returned %> damage.<br>Opponent countered for <%= @damage_taken %> damage.");
+            </script>
+
+        <% else %>
+          <div class='col-sm-2'><b>You skipped</b></div>
+      <% end %>
+    </div>
 
 
-<% end %>
+  <% end %> <!-- if @opponent_attacking end -->
+
+<% end %> <!-- if @death_status end -->

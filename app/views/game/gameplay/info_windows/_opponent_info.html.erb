@@ -1,25 +1,27 @@
 <!-- FROM METHOD update_opponent_info in play_game.rb -->
 
 <% health_remainder = (@opponent_current_health.to_f / @opponent_health.to_f) * 100 %>
-<% if (0..25) === health_remainder %>
-  <%= image_tag("1_4_health.png", height: 55, width: 55) %>
+<% if health_remainder == 0 %>
+  <%= image_tag("no_health.png", height: 45, width: 45) %>
+<% elsif (1..25) === health_remainder %>
+  <%= image_tag("1_4_health.png", height: 45, width: 45) %>
 <% elsif (26..50) === health_remainder %>
-  <%= image_tag("1_2_health.png", height: 55, width: 55) %>
+  <%= image_tag("1_2_health.png", height: 45, width: 45) %>
 <% elsif (51..75) === health_remainder %>
-  <%= image_tag("3_4_health.png", height: 55, width: 55) %>
+  <%= image_tag("3_4_health.png", height: 45, width: 45) %>
 <% elsif (76..99) === health_remainder %>
-  <%= image_tag("slight_damage_health.png", height: 55, width: 55) %>
+  <%= image_tag("slight_damage_health.png", height: 45, width: 45) %>
 <% else %>
-  <%= image_tag("full_health.png", height: 55, width: 55) %>
+  <%= image_tag("full_health.png", height: 45, width: 45) %>
 <% end %>
 <br>
 <h4 align='center'><%= @opponent_current_health %>/<%= @opponent_health %></h4>
 
-<br><br>
+<br>
 <% if @opponent_current_energy == 5 %>
-  <%= image_tag("full_energy.png", height: 55, width: 55) %>
+  <%= image_tag("full_energy.png", height: 45, width: 45) %>
 <% else %>
-  <%= image_tag("#{@opponent_current_energy}_5_energy.png", height: 55, width: 55) %>
+  <%= image_tag("#{@opponent_current_energy}_5_energy.png", height: 45, width: 45) %>
 <% end %>
 
 <h4 align='center'><%=@opponent_current_energy %>/5</h4>

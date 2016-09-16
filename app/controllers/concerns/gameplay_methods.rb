@@ -27,7 +27,13 @@ module GameplayMethods
     usable = true
     error_text = ""
 
-    logger.info "verify_card_use: params[:player_action]: #{params[:player_action]} play_card.card_type: #{play_card.card_type}"
+    #There should only be one in play card! How to make sure of this?
+    attack_card_used = CardGroup.where(game_id: current_game_id, inplay_card: true).first
+    attack_card = SkillCard.find(attack_card_used.card_id) unless attack_card_used.nil?
+    attack_card_attack_type = 'x'
+    attack_card_attack_type = attack_card.attack_type unless attack_card_used.nil?
+
+    logger.info "verify_card_use: params[:player_action]: #{params[:player_action]} play_card.card_type: #{play_card.card_type} attack_card.attack_type: #{attack_card_attack_type}"
 
     if p1_energy < play_card.cost
       usable = false
@@ -35,7 +41,11 @@ module GameplayMethods
     else
       if params[:player_action] == 'defense' && play_card.card_type != 'defense'
         usable = false
-        error_text = "This is not a defense card!"
+        error_text = "#{play_card.name} is not a valid defense card!"
+      elsif params[:player_action] == 'defense'
+        defense_validation = send("#{play_card.bonus_method}", attack_card_attack_type, 'defense')
+        usable = defense_validation[:allowed]
+        error_text = defense_validation[:error_text]
       end
     end
 
@@ -52,6 +62,16 @@ module GameplayMethods
   end
 
   def continue_round
+    death_status = check_death
+
+    if death_status == 'none'
+      @death_status = false
+      @death_img = ''
+    else
+      @death_status = true
+      @death_img = death_status
+    end
+
     set_inplay_to_cooldown
     current_game_id = session[:game_id]
     current_game = Game.find(current_game_id)
@@ -184,6 +204,23 @@ module GameplayMethods
 
   def update_gameplay_ticker
     render partial: "game/gameplay/info_windows/gameplay_ticker", layout: false
+  end
+
+  def check_death
+    current_game_id = session[:game_id]
+    current_game = Game.find(current_game_id)
+
+    player_health = current_game.p1_health
+    opponent_health = current_game.p2_health
+
+    if player_health == 0 && opponent_health == 0
+      return 'both'
+    end
+
+    return 'player' if player_health == 0
+    return 'opponent' if opponent_health == 0
+
+    return 'none'
   end
 
 

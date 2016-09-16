@@ -23,6 +23,7 @@ var new_round_start;
 var player_setup;
 var player_attacking;
 var card_selected = false;
+var death_status = false;
 
 // 1. MAIN MENU
 $(document).on('click', '#main_menu_start', function() {
@@ -213,6 +214,7 @@ $(document).on('change', 'input[type=radio][name=opponent_options]', function() 
 $(document).on('click', "#start_new_game", function(e) {
   new_round_start = true;
   player_setup = true;
+  death_status = false;
   console.log("Oppenent selected: " + opponent_class_id);
   console.log("starting game with " + player_one_class_id);
 
@@ -400,15 +402,19 @@ $(document).on('click', "#defend_button", function(e) {
 
 //       F. CONTINUE BUTTON
 $(document).on('click', "#continue_round_button", function(e) {
-  $('#gameplay_middle_update').html("");
-
+  console.log("Death status: " + death_status);
   $('#gameplay_middle_update').load("/game/determine_action?" + $.param({action_played:'continue_round', class_selected_id:player_one_class_id, opponent_selected_id:opponent_class_id}), function() {
-    update_info_boxes();
-    if(player_attacking == true) {
-      $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'defend'}));
+    if(death_status == true) {
+      $('#player_hand_cards').html("");
     } else {
-      $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'attack'}));
+      if(player_attacking == true) {
+        $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'defend'}));
+      } else {
+        $('#player_hand_cards').load("/game/update_player_hand?" + $.param({from_action: 'attack'}));
+      }
     }
+
+    update_info_boxes();
   });
 
 });
@@ -455,7 +461,7 @@ $(document).on('click', "#next_round_button", function(e) {
 // ============================================
 
 //         A. PLAY BUTTON CARD COUNT CHECK
-function update_info_boxes() {
+function update_info_boxes(death_status = false) {
   $('#player_info').load("/game/update_player_info?" + $.param({class_selected_id:player_one_class_id}));
   $('#opponent_info').load("/game/update_opponent_info?" + $.param({opponent_selected_id:opponent_class_id}));
   $('#round_info').load("/game/update_round_info?" + $.param({new_round_start:new_round_start}));
@@ -530,9 +536,13 @@ function everyone_skipped() {
   html_value += "<div class='col-sm-2'><small><b>Opponent skipped</b</small></div>"
   html_value += "<div class='col-sm-3'></div>"
   html_value += "<div class='col-sm-4'><b>Player skipped</b></div>"
-  html_value += "<div class='col-sm-2'><br><br><br><div class='btn btn-small btn-success' id='next_round_button'>End Round</div></div>"
+  html_value += "<div class='col-sm-2'><br><br><br><button type='button' class='btn-sm btn-success btn-sm' id='next_round_button'>End Round</button></div>"
   html_value += "</div>"
 $('#gameplay_middle_update').html(html_value);
+};
+
+function set_death_status() {
+  death_status = true;
 };
 
 

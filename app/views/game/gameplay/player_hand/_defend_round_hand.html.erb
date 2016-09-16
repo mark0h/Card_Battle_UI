@@ -9,13 +9,11 @@
       </label>
       <% end %>
     </div>
+    <br><br>
+    <button type="button" class="btn-sm btn-success btn-sm" id='defend_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">DEFEND</button>
+    <button type="button" class='btn-sm btn-warning btn-sm' id='skip_defend_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">SKIP</button>
+    <button type="button" class='btn-sm btn-danger btn-sm' id='forfeit_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">FORFEIT</button>
 
-  </div>
-
-  <div class='col-sm-2'>
-    <div class='btn btn-success' id='defend_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">DEFEND</div><br><br>
-    <div class='btn btn-warning' id='skip_defend_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">SKIP</div><br><br>
-    <div class='btn btn-danger' id='forfeit_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">FORFEIT</div><br><br>
   </div>
 </div>
 

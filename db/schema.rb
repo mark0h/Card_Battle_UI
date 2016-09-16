@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913010845) do
+ActiveRecord::Schema.define(version: 20160916201619) do
 
   create_table "card_groups", force: :cascade do |t|
     t.integer "game_id"
@@ -85,6 +85,26 @@ ActiveRecord::Schema.define(version: 20160913010845) do
 
   add_index "skill_cards", ["class_id"], name: "index_skill_cards_on_class_id"
   add_index "skill_cards", ["name"], name: "index_skill_cards_on_name"
+
+  create_table "status_effects", force: :cascade do |t|
+    t.integer  "game_id"
+    t.integer  "player_id"
+    t.integer  "status_id"
+    t.integer  "remaining"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "type"
+    t.text     "affect_text"
+    t.integer  "duration"
+    t.string   "duration_type"
+    t.string   "bonus_method"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
