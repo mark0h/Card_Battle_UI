@@ -39,6 +39,7 @@ module AiAction
     damage_countered = 0
     total_bonus = 0
     defense_card = nil
+    ai_skipped = false
 
     SkillCard.where(id: card_ids).each do |ai_card|
       if ai_card.card_type = 'defense'
@@ -51,13 +52,16 @@ module AiAction
       end
     end
 
-    update_ai_energy(defense_card.cost, current_game_id)
+    if defense_card.nil?
+      ai_skipped = true
+    else
+      update_ai_energy(defense_card.cost, current_game_id)
+      #Set card to inplay deck
+      card_used = CardGroup.where(game_id: current_game_id, user_id: 0, card_id: defense_card.id).first
+      card_used.update(current_hand_card: false, deck_card: false, cooldown_card: false, inplay_card: true)
+    end
 
-    #Set card to inplay deck
-    card_used = CardGroup.where(game_id: current_game_id, user_id: 0, card_id: defense_card.id).first
-    card_used.update(current_hand_card: false, deck_card: false, cooldown_card: false, inplay_card: true)
-
-    return {card: defense_card, damage_blocked: damage_blocked, damage_countered: damage_countered}
+    return {card: defense_card, damage_blocked: damage_blocked, damage_countered: damage_countered, ai_skipped: ai_skipped}
 
   end
 

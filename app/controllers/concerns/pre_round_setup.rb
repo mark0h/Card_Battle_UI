@@ -163,7 +163,7 @@ module PreRoundSetup
 
     @round_number = current_game.round
 
-    if params[:new_game_start] == "true"
+    if params[:new_round_start] == "true"
       @round_phase = "Setup"
     else
       @round_phase = @whose_turn
@@ -190,7 +190,7 @@ module PreRoundSetup
 
   end
 
-  
+
 
 
 end

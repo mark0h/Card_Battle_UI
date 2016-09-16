@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get '/game/add_card_to_hand', to: 'game#add_card_to_hand'
   get '/game/remove_card_from_hand', to: 'game#remove_card_from_hand'
   get '/game/start_round', to: 'game#start_round'
+  get 'game/verify_card_use', to: 'game#verify_card_use'
 
   # PLAY GAME STATUS WINDOW
   get '/game/update_player_info', to: 'game#update_player_info'
