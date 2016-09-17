@@ -61,7 +61,7 @@ module AiAction
             defense_card = ai_card
           end
         end
-        
+
       end
 
     end
@@ -92,8 +92,8 @@ module AiAction
 
 
   def update_ai_play_hand
-    current_game_id = session[:game_id]
-    @opponent_hand = CardGroup.where(game_id: current_game_id, user_id: 0, current_hand_card: true)
+    @opponent_status_list = return_status_list(0)
+    @opponent_hand = CardGroup.where(game_id: session[:game_id], user_id: 0, current_hand_card: true)
     logger.info "@opponent_hand: #{@opponent_hand.inspect}"
     render partial: "game/gameplay/opponent_hand",layout: false
   end

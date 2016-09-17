@@ -3,6 +3,7 @@ class GameController < ApplicationController
   include MainMenu
   include GameplayMethods
   include PreRoundSetup
+  include StatusEffects
   include Attack
   include Defend
   include AiSetup

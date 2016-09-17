@@ -14,7 +14,7 @@ module Barbarian
     return 0
   end
 
-  def barbarian_overpower(damage_type, attack_type)
+  def barbarian_overpower(damage_type, attack_type, player_id)
 
     if damage_type == 'mp' && attack_type == 'defense'
       return {block: -2, damage_bonus: 0, allowed: true}
@@ -22,42 +22,37 @@ module Barbarian
     return {block: 0, damage_bonus: 0, allowed: false, error_text: 'Overpower can only counter Melee Physical attacks. '}
   end
 
-  def barbarian_overpower_use?(attack_type, play_hand_count)
-    if attack_type == 'defense'
-      return true
-    else
-      if play_hand_count < 2
-        return true
-      end
+  def barbarian_groundslam(damage_type, attack_type, player_id)
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_insight(damage_type, attack_type, player_id)
+    apply_status(player_id, 'Insight')
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_whirlwind(damage_type, attack_type, player_id)
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_roar(damage_type, attack_type, player_id)
+    apply_status(player_id, 'Fury')
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_deathbyaxe(damage_type, attack_type, player_id)
+    apply_status(player_id, 'Unstoppable')
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_bezerker(damage_type, attack_type, player_id)
+    return {block: 0, damage_bonus: 0}
+  end
+
+  def barbarian_totem(damage_type, attack_type, player_id)
+    Status.where(status_type: 'buff').order("RANDOM()").limit(2).each do |add_buff|
+      apply_status(player_id, add_buff.name)
     end
-
-  end
-
-  def barbarian_groundslam(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_insight(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_whirlwind(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_roar(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_deathbyaxe(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_bezerker(damage_type, attack_type)
-    return {block: 0, damage_bonus: 0}
-  end
-
-  def barbarian_totem(damage_type, attack_type)
     return {block: 0, damage_bonus: 0}
   end
 

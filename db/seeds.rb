@@ -42,26 +42,26 @@ overpower_priority = CardPriority.where(card_id: 1).first
 overpower_priority.update(priority: 6)
 
 #UPDATE BARBARIAN BUFF ATTACK TYPE VALUES
-b_insight = SkillCard.where(name: 'Barbaric Insight')
-d_roar = SkillCard.where(name: 'Dragon Roar')
-t_totem = SkillCard.where(name: 'Tribal Totem')
+b_insight = SkillCard.where(name: 'Barbaric Insight').first
+d_roar = SkillCard.where(name: 'Dragon Roar').first
+t_totem = SkillCard.where(name: 'Tribal Totem').first
 
 b_insight.update(attack_type: 'x')
 d_roar.update(attack_type: 'x')
 t_totem.update(attack_type: 'x')
 
 #ADD STATUS EFFECTS
-Status.create(name: 'Defenseless', type: 'debuff', affect_text: 'Take double damage, up to +6', duration: 1, duration_type: 'attack', bonus_method: 'defenseless_debuff')
-Status.create(name: 'Bleed', type: 'debuff', affect_text: 'Take 4 damage on next attack', duration: 1, duration_type: 'attack', bonus_method: 'bleed_debuff')
-Status.create(name: 'Slow', type: 'debuff', affect_text: 'Deal 1/2 damage', duration: 1, duration_type: 'attack', bonus_method: 'slow_debuff')
-Status.create(name: 'Poison', type: 'debuff', affect_text: 'All heals only heal 1/2 damage', duration: 1, duration_type: 'heal', bonus_method: 'poison_debuff')
-Status.create(name: 'Fatigue', type: 'debuff', affect_text: 'Skills cost +1', duration: 1, duration_type: 'turn', bonus_method: 'fatigue_debuff')
-Status.create(name: 'Blind', type: 'debuff', affect_text: 'Deal -2 damage(per Skill)', duration: 1, duration_type: 'attack', bonus_method: 'blind_debuff')
-Status.create(name: 'Burning', type: 'debuff', affect_text: 'Take 4 damage on next attack', duration: 1, duration_type: 'attack', bonus_method: 'burning_debuff')
-Status.create(name: 'Unstoppable', type: 'buff', affect_text: 'Skills cost nothing', duration: 1, duration_type: 'turn', bonus_method: 'unstoppable_buff')
-Status.create(name: 'Fury', type: 'buff', affect_text: 'Deal +2 damage(per Skill)', duration: 1, duration_type: 'attack', bonus_method: 'fury_buff')
-Status.create(name: 'Barrier', type: 'buff', affect_text: 'Take 1/2 magic damage', duration: 1, duration_type: 'attack', bonus_method: 'barrier_buff')
-Status.create(name: 'Wall', type: 'buff', affect_text: 'Take 1/2 physical damage', duration: 1, duration_type: 'attack', bonus_method: 'wall_buff')
-Status.create(name: 'Protection', type: 'buff', affect_text: 'Take 1/2 all damage', duration: 1, duration_type: 'attack', bonus_method: 'protection_buff')
-Status.create(name: 'Insight', type: 'buff', affect_text: 'Take no ranged damage', duration: 1, duration_type: 'attack', bonus_method: 'insight_buff')
-Status.create(name: 'Thorns', type: 'buff', affect_text: 'Attacker takes 2 damge(per skill)', duration: 1, duration_type: 'turn', bonus_method: 'thorns_buff')
+Status.create(name: 'Defenseless', status_type: 'debuff', affect_text: 'Take double damage, up to +6', duration: 1, duration_type: 'attack', bonus_method: 'defenseless_debuff')
+Status.create(name: 'Bleed', status_type: 'debuff', affect_text: 'Take 4 damage on next attack', duration: 1, duration_type: 'attack', bonus_method: 'bleed_debuff')
+Status.create(name: 'Slow', status_type: 'debuff', affect_text: 'Deal 1/2 damage', duration: 1, duration_type: 'attack', bonus_method: 'slow_debuff')
+Status.create(name: 'Poison', status_type: 'debuff', affect_text: 'All heals only heal 1/2 damage', duration: 1, duration_type: 'heal', bonus_method: 'poison_debuff')
+Status.create(name: 'Fatigue', status_type: 'debuff', affect_text: 'Skills cost +1', duration: 1, duration_type: 'round', bonus_method: 'fatigue_debuff')
+Status.create(name: 'Blind', status_type: 'debuff', affect_text: 'Deal -2 damage(per Skill)', duration: 1, duration_type: 'attack', bonus_method: 'blind_debuff')
+Status.create(name: 'Burning', status_type: 'debuff', affect_text: 'Take 4 damage on next attack', duration: 1, duration_type: 'attack', bonus_method: 'burning_debuff')
+Status.create(name: 'Unstoppable', status_type: 'buff', affect_text: 'Skills cost nothing', duration: 1, duration_type: 'round', bonus_method: 'unstoppable_buff')
+Status.create(name: 'Fury', status_type: 'buff', affect_text: 'Deal +2 damage(per Skill)', duration: 1, duration_type: 'attack', bonus_method: 'fury_buff')
+Status.create(name: 'Barrier', status_type: 'buff', affect_text: 'Take 1/2 magic damage', duration: 1, duration_type: 'attack', bonus_method: 'barrier_buff')
+Status.create(name: 'Wall', status_type: 'buff', affect_text: 'Take 1/2 physical damage', duration: 1, duration_type: 'attack', bonus_method: 'wall_buff')
+Status.create(name: 'Protection', status_type: 'buff', affect_text: 'Take 1/2 all damage', duration: 1, duration_type: 'attack', bonus_method: 'protection_buff')
+Status.create(name: 'Insight', status_type: 'buff', affect_text: 'Take no ranged damage', duration: 1, duration_type: 'attack', bonus_method: 'insight_buff')
+Status.create(name: 'Thorns', status_type: 'buff', affect_text: 'Attacker takes 2 damge(per skill)', duration: 1, duration_type: 'round', bonus_method: 'thorns_buff')

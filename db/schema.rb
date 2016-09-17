@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916201619) do
+ActiveRecord::Schema.define(version: 20160916233951) do
 
   create_table "card_groups", force: :cascade do |t|
     t.integer "game_id"
@@ -91,13 +91,14 @@ ActiveRecord::Schema.define(version: 20160916201619) do
     t.integer  "player_id"
     t.integer  "status_id"
     t.integer  "remaining"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "duration_type"
   end
 
   create_table "statuses", force: :cascade do |t|
     t.string   "name"
-    t.string   "type"
+    t.string   "status_type"
     t.text     "affect_text"
     t.integer  "duration"
     t.string   "duration_type"

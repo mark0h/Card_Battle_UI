@@ -11,6 +11,8 @@ module Attack
     player_class = ClassCard.find(class_selected_id)
     opponent_class = ClassCard.find(opponent_selected_id)
 
+    energy_cost_bonus = calculate_effect_energy(current_game, current_user.id).to_i
+
 
     @attack_error = false
     @round_number = current_game.round
@@ -32,7 +34,7 @@ module Attack
       @ai_skipped = opponent_defense_hash[:ai_skipped]
 
       #Update energy
-      update_energy(@attack_card.cost, current_game_id)
+      update_energy(@attack_card.cost, current_game_id, energy_cost_bonus)
 
       #Update whose turn information
       current_game.update(whose_turn: 22)  #Update to player 2 defending(2)
@@ -80,7 +82,7 @@ module Attack
     logger.info "player_apply_damage  player values: player_damage_taken: #{player_damage_taken} player_damage_type_taken: #{player_damage_type_taken} player_attack_bonus: #{player_attack_bonus.inspect} player_class_damage_defense: #{player_class_damage_defense}"
     logger.info "player_apply_damage opponent_values: opponent_damage_taken: #{opponent_damage_taken} opponent_damage_type_taken: #{opponent_damage_type_taken} opponent_defense_bonus: #{opponent_defense_bonus.inspect} opponent_class_damage_defense: #{opponent_class_damage_defense}"
 
-    current_game.update(p1_health: player_remaining_health, p2_health: opponent_remaining_health)
+    # current_game.update(p1_health: player_remaining_health, p2_health: opponent_remaining_health)
 
     return player_total_damage_taken, opponent_total_damage_taken
   end

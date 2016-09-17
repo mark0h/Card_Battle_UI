@@ -33,9 +33,12 @@ module GameplayMethods
     attack_card_attack_type = 'x'
     attack_card_attack_type = attack_card.attack_type unless attack_card_used.nil?
 
+    energy_cost_bonus = calculate_effect_energy(current_game, current_user.id).to_i
+    total_card_cost = energy_cost_bonus + play_card.cost
+
     logger.info "verify_card_use: params[:player_action]: #{params[:player_action]} play_card.card_type: #{play_card.card_type} attack_card.attack_type: #{attack_card_attack_type}"
 
-    if p1_energy < play_card.cost
+    if p1_energy < total_card_cost
       usable = false
       error_text = "Not enough energy to use this card"
     else
@@ -143,8 +146,12 @@ module GameplayMethods
   end
 
 
-  def update_energy(used_energy, game_id)
+  def update_energy(used_energy, game_id, status_bonus)
     current_game = Game.find(game_id)
+
+    final_energy_cost = used_energy + status_bonus
+    final_energy_cost = 0 if final_energy_cost < 0
+
     new_energy = current_game.p1_energy - used_energy
     current_game.update(p1_energy: new_energy)
   end
@@ -176,6 +183,7 @@ module GameplayMethods
     current_game_id = session[:game_id]
     @player_one_play_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
 
+    @player_one_status_list = return_status_list(current_user.id)
 
     if params[:from_action] == 'defend'
       render partial: "game/gameplay/player_hand/defend_round_hand",layout: false

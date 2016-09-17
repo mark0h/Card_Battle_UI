@@ -37,7 +37,7 @@ module Defend
       card_used.update(current_hand_card: false, deck_card: false, cooldown_card: false, inplay_card: true)
 
       #Update energy
-      update_energy(defend_card.cost, current_game_id)
+      update_energy(defend_card.cost, current_game_id, status_bonus)
 
       #Update whose turn information
       current_game.update(whose_turn: 11)  #Update to player 1 attacking(1)
