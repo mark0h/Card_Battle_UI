@@ -51,8 +51,13 @@ module Barbarian
   end
 
   def barbarian_totem(damage_type, attack_type, player_id)
-    Status.where(status_type: 'buff').order("RANDOM()").limit(2).each do |add_buff|
-      apply_status(player_id, add_buff.name)
+    buffs_added = 0
+    Status.where(status_type: 'buff').order("RANDOM()").each do |add_buff|
+      if StatusEffect.exists?(game_id: session[:game_id], player_id: player_id, status_id: add_buff.id)
+      elsif buffs_added < 2
+        apply_status(player_id, add_buff.name)
+        buffs_added += 1
+      end
     end
     return {block: 0, damage_bonus: 0}
   end

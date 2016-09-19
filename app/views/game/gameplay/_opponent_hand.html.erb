@@ -8,8 +8,10 @@
     <% end %>
   </div>
   <div class='col-sm-5' id='opponent_status_effects'>
-    <% @opponent_status_list.each do |status| %>
-      <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "opponent_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+    <% if @opponent_status_list %>
+      <% @opponent_status_list.each do |status| %>
+        <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "opponent_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+      <% end %>
     <% end %>
   </div>
 

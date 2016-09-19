@@ -15,11 +15,9 @@ module StatusEffects
 
   #Called after an attack or after a round
   def remove_status?(player_id, action)
-    StatusEffect.where(game_id: session[:game_id], player_id: player_id).each do |status|
-      if status.duration_type == action
-        status.destroy
-      end
-    end
+    stats_to_remove = StatusEffect.where(game_id: session[:game_id], player_id: player_id, duration_type: action)
+    logger.info "remove_status? removing: #{stats_to_remove.inspect}"
+    stats_to_remove.destroy_all
   end
 
   #Called after initial damage is calculated.
@@ -31,7 +29,8 @@ module StatusEffects
     player_added_damage = 0
     opponent_added_damage = 0
 
-    StatusEffect.where(game_id: current_game.id, player_id: player_id).each do |status|
+    StatusEffect.where(game_id: current_game.id, player_id: player_id).each do |status_effect|
+      status = Status.find(status_effect.status_id)
       added_damage = send("#{status.bonus_method}", 'damage')
       player_added_damage += added_damage[:player].to_i
       opponent_added_damage += added_damage[:opponent].to_i
@@ -44,6 +43,7 @@ module StatusEffects
     opponent_remaining_health = opponent_health - (damage_to_apply + opponent_added_damage)
 
     current_game.update(p1_health: player_remaining_health, p2_health: opponent_remaining_health)
+    return (damage_to_receive + player_added_damage), (damage_to_apply + opponent_added_damage)
   end
 
   #Called to update energy
@@ -68,27 +68,67 @@ module StatusEffects
 
 
   def defenseless_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def bleed_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def slow_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def poison_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def fatigue_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def blind_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def burning_debuff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def unstoppable_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def fury_buff(damage_or_energy)
@@ -100,18 +140,43 @@ module StatusEffects
   end
 
   def barrier_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def wall_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def protection_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def insight_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
   def thorns_buff(damage_or_energy)
+    if damage_or_energy == 'energy'
+      return 0
+    else
+      return {player: 0, opponent: 0}
+    end
   end
 
 

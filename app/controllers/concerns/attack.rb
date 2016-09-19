@@ -41,7 +41,9 @@ module Attack
 
       #Update whose turn information
       current_game.update(whose_turn: 22)  #Update to player 2 defending(2)
-      @damage_taken, @damage_returned = player_apply_damage(current_game, current_user.id, player_class, opponent_class, @attack_card, @opponent_defense_card)
+      damage_to_receive, damage_to_apply = player_apply_damage(current_game, current_user.id, player_class, opponent_class, @attack_card, @opponent_defense_card)
+
+      @damage_taken, @damage_returned = calculate_effect_damage(current_game, current_user.id, damage_to_apply, damage_to_receive)
 
       render partial: "game/gameplay/info_windows/gameplay_middle",layout: false
     end

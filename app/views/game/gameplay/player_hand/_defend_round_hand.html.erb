@@ -17,8 +17,10 @@
   </div>
 
   <div class='col-sm-5' id='player_aflictions'>
-    <% @player_one_status_list.each do |status| %>
-      <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "player_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+    <% if @player_one_status_list %>
+      <% @player_one_status_list.each do |status| %>
+        <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "player_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+      <% end %>
     <% end %>
   </div>
 
