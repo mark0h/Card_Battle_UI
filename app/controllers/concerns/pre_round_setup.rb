@@ -178,6 +178,8 @@ module PreRoundSetup
     current_game_id = session[:game_id]
     @player_one_play_hand = CardGroup.where(game_id: current_game_id, user_id: current_user.id, current_hand_card: true)
 
+    @player_one_status_list = return_status_list(current_user.id)
+
     current_game = Game.find(current_game_id)
 
     if current_game.whose_turn == 11

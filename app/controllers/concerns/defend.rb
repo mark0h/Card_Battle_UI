@@ -37,7 +37,8 @@ module Defend
       card_used.update(current_hand_card: false, deck_card: false, cooldown_card: false, inplay_card: true)
 
       #Update energy
-      update_energy(defend_card.cost, current_game_id, status_bonus)
+      energy_status_bonus = calculate_effect_energy(current_user.id)
+      update_energy(defend_card.cost, current_game_id, energy_status_bonus)
 
       #Update whose turn information
       current_game.update(whose_turn: 11)  #Update to player 1 attacking(1)
@@ -65,7 +66,7 @@ module Defend
     else
       opponent_damage_taken = defense_card.damage
       opponent_damage_type_taken = defense_card.attack_type
-      player_defense_bonus = send("#{defense_card.bonus_method}", player_damage_type_taken, 'defense')
+      player_defense_bonus = send("#{defense_card.bonus_method}", player_damage_type_taken, 'defense', current_user.id)
       opponent_class_damage_defense = send("#{opponent_class.name.downcase}_damage_defense", opponent_damage_type_taken)
 
       opponent_total_damage_taken = opponent_damage_taken.to_i + opponent_class_damage_defense.to_i + player_defense_bonus[:damage_bonus]
@@ -73,7 +74,7 @@ module Defend
 
     #Calculate the total damage opponent returns to player
     player_damage_taken = attack_card.damage
-    opponent_attack_bonus = send("#{attack_card.bonus_method}", opponent_damage_type_taken, 'attack')
+    opponent_attack_bonus = send("#{attack_card.bonus_method}", opponent_damage_type_taken, 'attack', 0)
     player_class_damage_defense = send("#{opponent_class.name.downcase}_damage_defense", player_damage_type_taken)
 
     player_total_damage_taken = player_damage_taken.to_i + player_defense_bonus[:block] + player_class_damage_defense.to_i + opponent_attack_bonus[:damage_bonus]

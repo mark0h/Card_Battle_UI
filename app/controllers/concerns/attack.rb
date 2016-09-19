@@ -11,7 +11,7 @@ module Attack
     player_class = ClassCard.find(class_selected_id)
     opponent_class = ClassCard.find(opponent_selected_id)
 
-    energy_cost_bonus = calculate_effect_energy(current_game, current_user.id).to_i
+    energy_cost_bonus = calculate_effect_energy(current_user.id).to_i
 
 
     @attack_error = false
@@ -35,6 +35,9 @@ module Attack
 
       #Update energy
       update_energy(@attack_card.cost, current_game_id, energy_cost_bonus)
+
+      #check if this should remove status
+      remove_status?(current_user.id, 'attack')
 
       #Update whose turn information
       current_game.update(whose_turn: 22)  #Update to player 2 defending(2)
@@ -60,7 +63,7 @@ module Attack
     else
       player_damage_taken = defense_card.damage
       player_damage_type_taken = defense_card.attack_type
-      opponent_defense_bonus = send("#{defense_card.bonus_method}", opponent_damage_type_taken, 'defense')
+      opponent_defense_bonus = send("#{defense_card.bonus_method}", opponent_damage_type_taken, 'defense', 0)
       player_class_damage_defense = send("#{player_class.name.downcase}_damage_defense", player_damage_type_taken)
 
       player_total_damage_taken = player_damage_taken.to_i + player_class_damage_defense.to_i + opponent_defense_bonus[:damage_bonus]
@@ -68,7 +71,7 @@ module Attack
 
     #Calculate the total damage they return to the opponent.
     opponent_damage_taken = attack_card.damage
-    player_attack_bonus = send("#{attack_card.bonus_method}", player_damage_type_taken, 'attack')
+    player_attack_bonus = send("#{attack_card.bonus_method}", player_damage_type_taken, 'attack', current_user.id)
     opponent_class_damage_defense = send("#{player_class.name.downcase}_damage_defense", opponent_damage_type_taken)
 
     opponent_total_damage_taken = opponent_damage_taken.to_i + opponent_defense_bonus[:block] + opponent_class_damage_defense.to_i + player_attack_bonus[:damage_bonus]

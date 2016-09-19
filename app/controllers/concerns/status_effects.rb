@@ -8,7 +8,9 @@ module StatusEffects
 
     status_added = Status.where(name: status_name).first
 
-    StatusEffect.create(game_id: current_game_id, player_id: player_id, status_id: status_added.id, remaining: status.duration)
+    new_status_effect = StatusEffect.where(game_id: current_game_id, player_id: player_id, status_id: status_added.id).first_or_create
+    new_status_effect.update(remaining: status_added.duration, duration_type: status_added.duration_type)
+    logger.info "apply_status new_status_effect: #{new_status_effect.inspect}"
   end
 
   #Called after an attack or after a round
@@ -46,12 +48,13 @@ module StatusEffects
 
   #Called to update energy
   #     THIS ONLY RETURNS THE ACTUAL ENERGY COST
-  def calculate_effect_energy(current_game, player_id)
+  def calculate_effect_energy(player_id)
 
     added_energy = 0
 
-    StatusEffect.where(game_id: current_game.id, player_id: player_id).each do |status|
-      added_energy += send("#{status.bonus_method}", 'damage').to_i
+    StatusEffect.where(game_id: session[:game_id], player_id: player_id).each do |status_effect|
+      status = Status.find(status_effect.status_id)
+      added_energy += send("#{status.bonus_method}", 'energy').to_i
     end
     return added_energy
   end

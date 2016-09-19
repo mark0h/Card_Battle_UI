@@ -1,6 +1,6 @@
 
 <div class='row'>
-  <div class='col-sm-8'>
+  <div class='col-sm-6'>
 
     <div class="btn-group" id="defend_card_selector" data-toggle="buttons">
       <% @player_one_play_hand.each do |class_card| %>
@@ -15,6 +15,13 @@
     <button type="button" class='btn-sm btn-danger btn-sm' id='forfeit_button' data-current_hand="<%= @player_one_play_hand %>" data-count="<%= @player_one_play_hand.length %>">FORFEIT</button>
 
   </div>
+
+  <div class='col-sm-5' id='player_aflictions'>
+    <% @player_one_status_list.each do |status| %>
+      <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "player_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+    <% end %>
+  </div>
+
 </div>
 
 <% if @opponent_attack_card %>

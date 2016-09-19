@@ -1,5 +1,5 @@
 <div class='row'>
-  <div class='col-sm-8'>
+  <div class='col-sm-6'>
 
     <div class="btn-group" id="class_selector" data-toggle="buttons">
       <% @player_one_play_hand.each do |class_card| %>
@@ -9,5 +9,11 @@
       <% end %>
     </div>
 
+  </div>
+
+  <div class='col-sm-5' id='player_aflictions'>
+    <% @player_one_status_list.each do |status| %>
+      <%= image_tag("#{status.name}.png", height: 50, width: 50, title: "#{status.name}", id: "player_status_#{status.name}") %><small><b> <%= status.name %>: </b><%= status.affect_text %></small><br>
+    <% end %>
   </div>
 </div>

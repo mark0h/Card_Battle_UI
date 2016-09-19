@@ -27,6 +27,7 @@ module Barbarian
   end
 
   def barbarian_insight(damage_type, attack_type, player_id)
+    logger.info "calling apply_status for barbarian_insight: damage_type: #{damage_type}  attack_type: #{attack_type} player_id: #{player_id}"
     apply_status(player_id, 'Insight')
     return {block: 0, damage_bonus: 0}
   end

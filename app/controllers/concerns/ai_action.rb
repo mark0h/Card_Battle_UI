@@ -53,8 +53,8 @@ module AiAction
     SkillCard.where(id: card_ids).each do |ai_card|
       if total_energy >= ai_card.cost
 
-        if ai_card.card_type = 'defense'
-          temp_defense_bonus = send("#{ai_card.bonus_method}", player_attack_card_type, 'defense')
+        if ai_card.card_type == 'defense'
+          temp_defense_bonus = send("#{ai_card.bonus_method}", player_attack_card_type, 'defense', 0)
           temp_total_bonus = temp_defense_bonus[:block].to_i + (-1 * temp_defense_bonus[:damage_bonus].to_i)
           if temp_total_bonus < total_bonus #ALWAYS less, since we ALWAYS add to total damage taken!
             total_bonus = temp_total_bonus

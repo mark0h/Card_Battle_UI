@@ -33,7 +33,7 @@ module GameplayMethods
     attack_card_attack_type = 'x'
     attack_card_attack_type = attack_card.attack_type unless attack_card_used.nil?
 
-    energy_cost_bonus = calculate_effect_energy(current_game, current_user.id).to_i
+    energy_cost_bonus = calculate_effect_energy(current_user.id).to_i
     total_card_cost = energy_cost_bonus + play_card.cost
 
     logger.info "verify_card_use: params[:player_action]: #{params[:player_action]} play_card.card_type: #{play_card.card_type} attack_card.attack_type: #{attack_card_attack_type}"
@@ -46,7 +46,7 @@ module GameplayMethods
         usable = false
         error_text = "#{play_card.name} is not a valid defense card!"
       elsif params[:player_action] == 'defense'
-        defense_validation = send("#{play_card.bonus_method}", attack_card_attack_type, 'defense')
+        defense_validation = send("#{play_card.bonus_method}", attack_card_attack_type, 'defense', current_user.id)
         usable = defense_validation[:allowed]
         error_text = defense_validation[:error_text]
       end
@@ -128,6 +128,10 @@ module GameplayMethods
     p1_energy = 5 if p1_energy > 5
     p2_energy = round_number
     p2_energy = 5 if p2_energy > 5
+
+    #Remove statuses
+    remove_status?(current_game.user_id, 'round')
+    remove_status?(current_game.opponent_id, 'round')
 
     #Update game
     current_game.update(whose_turn: @whose_turn, round: round_number, p1_energy: p1_energy, p2_energy: p2_energy)
