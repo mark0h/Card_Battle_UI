@@ -43,7 +43,11 @@ module Attack
       current_game.update(whose_turn: 22)  #Update to player 2 defending(2)
       damage_to_receive, damage_to_apply = player_apply_damage(current_game, current_user.id, player_class, opponent_class, @attack_card, @opponent_defense_card)
 
-      @damage_taken, @damage_returned = calculate_effect_damage(current_game, current_user.id, damage_to_apply, damage_to_receive)
+      effect_damage_hash = calculate_effect_damage(current_game, current_user.id, 'attack', damage_to_apply, damage_to_receive, @attack_card.attack_type)
+      @damage_taken = effect_damage_hash[:attack_damage]
+      @damage_returned = effect_damage_hash[:defend_damage]
+      @attack_text = effect_damage_hash[:attack_text]
+      @damage_text = effect_damage_hash[:defend_text]
 
       render partial: "game/gameplay/info_windows/gameplay_middle",layout: false
     end

@@ -154,9 +154,10 @@ module GameplayMethods
     current_game = Game.find(game_id)
 
     final_energy_cost = used_energy + status_bonus
+    logger.info "update_energy final_energy_cost: #{final_energy_cost} (#{used_energy} + #{status_bonus})"
     final_energy_cost = 0 if final_energy_cost < 0
 
-    new_energy = current_game.p1_energy - used_energy
+    new_energy = current_game.p1_energy - final_energy_cost
     current_game.update(p1_energy: new_energy)
   end
 
