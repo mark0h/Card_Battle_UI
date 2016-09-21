@@ -73,7 +73,8 @@ module Defend
       opponent_damage_taken = defense_card.damage
       opponent_damage_type_taken = defense_card.attack_type
       player_defense_bonus = send("#{defense_card.bonus_method}", player_damage_type_taken, 'defense', current_user.id)
-      opponent_class_damage_defense = send("#{opponent_class.name.downcase}_damage_defense", opponent_damage_type_taken)
+      opponent_class_damage_defense_hash = send("#{opponent_class.name.downcase}_damage_defense", opponent_damage_type_taken)
+      opponent_class_damage_defense = opponent_class_damage_defense_hash[:damage]
 
       opponent_total_damage_taken = opponent_damage_taken.to_i + opponent_class_damage_defense.to_i + player_defense_bonus[:damage_bonus]
     end
@@ -81,7 +82,8 @@ module Defend
     #Calculate the total damage opponent returns to player
     player_damage_taken = attack_card.damage
     opponent_attack_bonus = send("#{attack_card.bonus_method}", opponent_damage_type_taken, 'attack', 0)
-    player_class_damage_defense = send("#{opponent_class.name.downcase}_damage_defense", player_damage_type_taken)
+    player_class_damage_defense_hash = send("#{opponent_class.name.downcase}_damage_defense", player_damage_type_taken)
+    player_class_damage_defense = player_class_damage_defense_hash[:damage]
 
     player_total_damage_taken = player_damage_taken.to_i + player_defense_bonus[:block] + player_class_damage_defense.to_i + opponent_attack_bonus[:damage_bonus]
 

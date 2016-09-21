@@ -9,6 +9,7 @@ class GameController < ApplicationController
   include AiSetup
   include AiAction
   include Barbarian
+  include Assassin
 
   def index
   end

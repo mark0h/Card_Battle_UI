@@ -7,11 +7,11 @@ module Barbarian
   # RETURNS HOW MUCH EXTRA DAMAGE TAKEN. NEGATIVE IF IT NEGATES DAMAGE
   def barbarian_damage_defense(damage_type)
     if damage_type == 'ms'
-      return 2
+      return {damage: 2, damage_text: "took 2 extra damage from Melee Spell attack"}
     elsif damage_type == 'rs'
-      return 2
+      return {damage: 2, damage_text: "took 2 extra damage from Ranged Spell attack"}
     end
-    return 0
+    return {damage: 0, damage_text: ""}
   end
 
   def barbarian_overpower(damage_type, attack_type, player_id)

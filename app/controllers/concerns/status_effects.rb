@@ -239,7 +239,7 @@ module StatusEffects
   def thorns_buff(damage_or_energy, attack_damage, attack_type)  #attacker takes +2 damage
     if damage_or_energy == 'energy'
       return 0
-    elsif damage_or_energy == 'defend'
+    elsif damage_or_energy == 'defend' && attack_type != 'x'
       return {attack: 0, defend: 2, attack_text: 'Attacker takes +2 damage from Thorns', defend_text: ''}
     else
       return {attack: 0, defend: 0, attack_text: '', defend_text: ''}
